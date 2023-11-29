@@ -19,8 +19,10 @@ public class Elf implements Comparable<Elf> {
      * Adds calories to this elf for carrying
      * @param calories to add to total count for this elf
      */
-    public void addCalories(int calories) {
-        totalCalories += calories;
+    public void addCalories(int... calories) {
+        for (int i : calories) {
+            totalCalories += i;
+        }
     }
 
     @Override

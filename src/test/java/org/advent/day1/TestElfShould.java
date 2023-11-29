@@ -2,6 +2,8 @@ package org.advent.day1;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
@@ -41,5 +43,19 @@ public class TestElfShould {
         Elf smallElf = new Elf();
         smallElf.addCalories(3000);
         assertThat(smallElf.compareTo(bigElf), lessThan(0));
+    }
+
+    @Test
+    void create_elf_with_items_totalling_6000() {
+        Elf bigElf = new Elf();
+        bigElf.addCalories(1000, 2000, 3000);
+        assertThat(bigElf.getTotalCalories(), equalTo(6000));
+    }
+
+    @Test
+    void create_elf_with_item_totalling_10000() {
+        Elf bigElf = new Elf();
+        bigElf.addCalories(10000);
+        assertThat(bigElf.getTotalCalories(), equalTo(10000));
     }
 }
