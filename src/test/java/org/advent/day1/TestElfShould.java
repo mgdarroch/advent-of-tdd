@@ -16,21 +16,34 @@ public class TestElfShould {
 
     @Test
     void have_1000_total_calories_after_adding_1000() {
-       fail("Not yet implemented");
+       Elf elf = new Elf();
+       elf.addCalories(1000);
+       assertThat(elf.getTotalCalories(), equalTo(1000));
     }
 
     @Test
     void compare_return_positive_value_for_elf_with_more_total_calories() {
-        fail("Not yet implemented");
+        Elf chunkyElf = new Elf();
+        Elf skinnyElf = new Elf();
+        chunkyElf.addCalories(1000);
+        int result = chunkyElf.compareTo(skinnyElf);
+        assertThat(result, equalTo(1));
     }
 
     @Test
     void compare_zero_for_equal_elf() {
-        fail("Not yet implemented");
+        Elf elf1 = new Elf();
+        Elf elf2 = new Elf();
+        int result = elf1.compareTo(elf2);
+        assertThat(result, equalTo(0));
     }
 
     @Test
     void compare_return_negative_value_for_elf_with_less_total_calories() {
-        fail("Not yet implemented");
+        Elf chunkyElf = new Elf();
+        Elf skinnyElf = new Elf();
+        skinnyElf.addCalories(1000);
+        int result = chunkyElf.compareTo(skinnyElf);
+        assertThat(result, equalTo(-1));
     }
 }
