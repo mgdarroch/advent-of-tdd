@@ -84,7 +84,7 @@ func TestParseDigitStringCanFindValidDigitsWhenThereIsOnlyOne(t *testing.T) {
 	t.Parallel()
 	line := "two"
 	want := 2
-	got := day1.ParseDigitString(line)
+	got, _ := day1.ParseDigitString(line, 0)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
