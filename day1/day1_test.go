@@ -80,7 +80,7 @@ zoneight234
 
 */
 
-func TestParseLineCanFindValidDigitStrings(t *testing.T) {
+func TestParseLineCanFindValidDigitStringsInLine(t *testing.T) {
 	t.Parallel()
 	line := "two1nine"
 	want := 29

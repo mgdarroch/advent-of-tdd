@@ -6,10 +6,8 @@ import (
 )
 
 func ParseLine(input string) int {
-	first := 0
-	last := 0
-	firstSet := false
-	lastSet := false
+	var first, last int
+	firstSet, lastSet := false, false
 	for _, c := range strings.Split(input, "") {
 		i, err := strconv.Atoi(c)
 		if err != nil {
@@ -26,11 +24,7 @@ func ParseLine(input string) int {
 	if lastSet == false {
 		last = first
 	}
-	firstStr := strconv.Itoa(first)
-	lastStr := strconv.Itoa(last)
-	joinedStr := firstStr + lastStr
-	result, _ := strconv.Atoi(joinedStr)
-	return result
+	return first*10 + last
 }
 
 func SumLines(sum int, input string) int {
