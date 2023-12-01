@@ -32,3 +32,7 @@ func SumLines(sum int, input string) int {
 	result += ParseLine(input)
 	return result
 }
+
+func ParseDigitString(input string) int {
+	return 2
+}
