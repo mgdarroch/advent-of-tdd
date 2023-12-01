@@ -1,11 +1,16 @@
 package day1_test
 
 import (
-	"fmt"
+	"day1"
 	"testing"
 )
 
-func TestPlaceholder(t *testing.T) {
+func TestFindsTheFirstAndLastNumber(t *testing.T) {
 	t.Parallel()
-	fmt.Println("Placeholder")
+	str := "1abc2"
+	want := 12
+	got := day1.parseLine(str)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
 }
