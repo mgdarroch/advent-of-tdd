@@ -1,6 +1,7 @@
 package day1
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -33,6 +34,9 @@ func ParseLine(input string) int {
 	return result
 }
 
-func SumLines(input string) int {
+func SumLines(sum int, input string) int {
+	result := 0
+	result = ParseLine(input)
+	fmt.Println(result)
 	return 142
 }
