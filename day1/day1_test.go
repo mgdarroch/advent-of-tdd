@@ -49,3 +49,12 @@ func TestParseLineFindsTheFirstAndLastNumbersWithASingleNumber(t *testing.T) {
 		t.Errorf("want %d, got %d", want, got)
 	}
 }
+
+func TestSumLinesWillAddAllResults(t *testing.T) {
+	t.Parallel()
+	want := 142
+	got := day1.SumLines("1abc2")
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
