@@ -1,7 +1,7 @@
 package day1_test
 
 import (
-	"day1"
+	"aoctdd/day1"
 	"testing"
 )
 
