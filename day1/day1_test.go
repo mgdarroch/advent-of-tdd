@@ -80,6 +80,16 @@ zoneight234
 
 */
 
+func TestParseDigitStringCanFindValidDigitsWhenThereIsOnlyOne(t *testing.T) {
+	t.Parallel()
+	line := "two"
+	want := 2
+	got := day1.ParseDigitString(line)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
 func TestParseLineCanFindValidDigitStringsInLine(t *testing.T) {
 	t.Parallel()
 	line := "two1nine"
