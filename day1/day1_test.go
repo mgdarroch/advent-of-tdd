@@ -90,6 +90,15 @@ func TestParseDigitStringCanFindValidDigitsWhenThereIsOnlyOne(t *testing.T) {
 	}
 }
 
+func TestParseDigitReturnsAnErrorWhereThereIsNoValidDigitStrings(t *testing.T) {
+	t.Parallel()
+	line := "fail"
+	got, err := day1.ParseDigitString(line, 0)
+	if err == nil {
+		t.Errorf("expected no valid strings error, got %d", got)
+	}
+}
+
 func TestParseLineCanFindValidDigitStringsInLine(t *testing.T) {
 	t.Parallel()
 	line := "two1nine"
