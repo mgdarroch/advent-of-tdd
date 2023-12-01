@@ -15,17 +15,29 @@ type DigitString struct {
 func ParseLine(input string) int {
 	var first, last int
 	firstSet, lastSet := false, false
-	for _, c := range strings.Split(input, "") {
-		i, err := strconv.Atoi(c)
+	for i, c := range strings.Split(input, "") {
+		num, err := strconv.Atoi(c)
 		if err != nil {
-			continue
+			digitFromString, err := ParseDigitString(input, i)
+			if err != nil {
+				continue
+			}
+			if !firstSet {
+				first = digitFromString
+				firstSet = true
+				continue
+			} else {
+				last = digitFromString
+				lastSet = true
+				continue
+			}
 		}
 		if !firstSet {
-			first = i
+			first = num
 			firstSet = true
 			continue
 		}
-		last = i
+		last = num
 		lastSet = true
 	}
 	if lastSet == false {
@@ -63,5 +75,5 @@ func ParseDigitString(input string, start int) (int, error) {
 			return option.Integer, nil
 		}
 	}
-	return 0, errors.New("no valid digits")
+	return 0, errors.New("no valid digit strings")
 }
