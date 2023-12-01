@@ -66,19 +66,6 @@ func TestSumLinesWillAddAllResults(t *testing.T) {
 }
 
 // PART 2
-/*
-
-INPUT
-
-two1nine
-eightwothree
-abcone2threexyz
-xtwone3four
-4nineeightseven2
-zoneight234
-7pqrstsixteen
-
-*/
 
 func TestParseDigitStringCanFindValidDigitsWhenThereIsOnlyOne(t *testing.T) {
 	t.Parallel()
@@ -104,6 +91,27 @@ func TestParseLineCanFindValidDigitStringsInLine(t *testing.T) {
 	line := "two1nine"
 	want := 29
 	got := day1.ParseLine(line)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
+func TestParseLineCanFindValidDigitStringsInAllTestLines(t *testing.T) {
+	t.Parallel()
+	lines := [7]string{
+		"two1nine",
+		"eightwothree",
+		"abcone2threexyz",
+		"xtwone3four",
+		"4nineeightseven2",
+		"zoneight234",
+		"7pqrstsixteen",
+	}
+	want := 281
+	got := 0
+	for _, line := range lines {
+		got = day1.SumLines(got, line)
+	}
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
