@@ -1,13 +1,29 @@
 package day1
 
 import (
-	"fmt"
+	"strconv"
 	"strings"
 )
 
 func ParseLine(input string) int {
+	first := 0
+	last := 0
+	firstSet := false
 	for _, c := range strings.Split(input, "") {
-		fmt.Println(c)
+		i, err := strconv.Atoi(c)
+		if err != nil {
+			continue
+		}
+		if !firstSet {
+			first = i
+			firstSet = true
+			continue
+		}
+		last = i
 	}
-	return 12
+	firstStr := strconv.Itoa(first)
+	lastStr := strconv.Itoa(last)
+	joinedStr := firstStr + lastStr
+	result, _ := strconv.Atoi(joinedStr)
+	return result
 }
