@@ -9,6 +9,7 @@ func ParseLine(input string) int {
 	first := 0
 	last := 0
 	firstSet := false
+	lastSet := false
 	for _, c := range strings.Split(input, "") {
 		i, err := strconv.Atoi(c)
 		if err != nil {
@@ -20,6 +21,10 @@ func ParseLine(input string) int {
 			continue
 		}
 		last = i
+		lastSet = true
+	}
+	if lastSet == false {
+		last = first
 	}
 	firstStr := strconv.Itoa(first)
 	lastStr := strconv.Itoa(last)
