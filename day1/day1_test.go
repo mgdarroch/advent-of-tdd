@@ -10,7 +10,7 @@ import (
 //a1b2c3d4e5f
 //treb7uchet
 
-func TestFindsTheFirstAndLastNumbersInALineWithTwoNumbers(t *testing.T) {
+func TestParseLineFindsTheFirstAndLastNumbersInALineWithTwoNumbers(t *testing.T) {
 	t.Parallel()
 	str := "1abc2"
 	want := 12
@@ -20,7 +20,7 @@ func TestFindsTheFirstAndLastNumbersInALineWithTwoNumbers(t *testing.T) {
 	}
 }
 
-func TestFindsTheFirstAndLastNumbersInALineWithTwoNumbersWithCharactersAtTheStart(t *testing.T) {
+func TestParseLineFindsTheFirstAndLastNumbersInALineWithTwoNumbersWithCharactersAtTheStart(t *testing.T) {
 	t.Parallel()
 	str := "pqr3stu8vwx"
 	want := 38
@@ -30,7 +30,7 @@ func TestFindsTheFirstAndLastNumbersInALineWithTwoNumbersWithCharactersAtTheStar
 	}
 }
 
-func TestFindsTheFirstAndLastNumbersWithMultipleNumbers(t *testing.T) {
+func TestParseLineFindsTheFirstAndLastNumbersWithMultipleNumbers(t *testing.T) {
 	t.Parallel()
 	str := "a1b2c3d4e5f"
 	want := 15
@@ -40,7 +40,7 @@ func TestFindsTheFirstAndLastNumbersWithMultipleNumbers(t *testing.T) {
 	}
 }
 
-func TestFindsTheFirstAndLastNumbersWithASingleNumber(t *testing.T) {
+func TestParseLineFindsTheFirstAndLastNumbersWithASingleNumber(t *testing.T) {
 	t.Parallel()
 	str := "treb7uchet"
 	want := 77
