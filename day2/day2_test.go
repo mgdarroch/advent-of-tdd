@@ -1,1 +1,1 @@
-package day2
+package day2_test
