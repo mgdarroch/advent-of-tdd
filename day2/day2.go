@@ -18,27 +18,42 @@ type Game struct {
 
 func ValidateGame(sum int, input string) (validSum int, cubePower int) {
 	info := ParseLine(input)
-	maxRed := 12
-	maxGreen := 13
-	maxBlue := 14
+	redLimit := 12
+	greenLimit := 13
+	blueLimit := 14
+
+	maxRed := 0
+	maxGreen := 0
+	maxBlue := 0
+
 	valid := true
 	newSum := sum
 	for _, game := range info.GameData {
-		if game.RedCount > maxRed {
+		if game.RedCount > redLimit {
 			valid = false
+		}
+		if game.GreenCount > greenLimit {
+			valid = false
+		}
+		if game.BlueCount > blueLimit {
+			valid = false
+		}
+		if game.RedCount > maxRed {
+			maxRed = game.RedCount
 		}
 		if game.GreenCount > maxGreen {
-			valid = false
+			maxGreen = game.GreenCount
 		}
 		if game.BlueCount > maxBlue {
-			valid = false
+			maxBlue = game.BlueCount
 		}
 	}
 
 	if valid {
 		newSum += info.Id
 	}
-	return newSum, 48
+	power := maxRed * maxBlue * maxGreen
+	return newSum, power
 }
 
 func ParseLine(input string) GameInfo {
