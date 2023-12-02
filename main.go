@@ -19,7 +19,13 @@ func solutionDay1() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer f.Close()
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+
+		}
+	}(f)
+
 	scanner := bufio.NewScanner(f)
 	part1Answer := 0
 	part2Answer := 0
@@ -36,7 +42,13 @@ func solutionDay2() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer f.Close()
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+
+		}
+	}(f)
+
 	scanner := bufio.NewScanner(f)
 	idSum := 0
 	powerSum := 0
