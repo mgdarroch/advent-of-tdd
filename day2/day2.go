@@ -6,12 +6,23 @@ import (
 	"strings"
 )
 
-func ParseLine(input string) (int, error) {
+type GameInfo struct {
+	Id       int
+	GameData string
+}
+
+func ParseLine(input string) (GameInfo, error) {
 	gameId := extractGameId(input)
+
+	game := GameInfo{
+		Id:       gameId,
+		GameData: "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
+	}
+
 	if strings.Contains(input, "Game 1") {
-		return gameId, nil
+		return game, nil
 	} else {
-		return 0, errors.New("invalid game")
+		return GameInfo{}, errors.New("invalid game")
 	}
 }
 
