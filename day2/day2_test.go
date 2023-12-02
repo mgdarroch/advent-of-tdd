@@ -201,11 +201,11 @@ func TestValidateGameCalledOverExampleInputReturnsCorrectPowerSum(t *testing.T) 
 }
 
 func TestTidyInput(t *testing.T) {
-	line := "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-	want := "3b,4r;1r,2g,6b;2g"
+	line := "3blue,4red"
+	want := "3b,4r"
 	got := tidyInput(line)
 	if want != got {
-		t.Errorf("want %s, want %s", want, got)
+		t.Errorf("want %s, got %s", want, got)
 	}
 }
 

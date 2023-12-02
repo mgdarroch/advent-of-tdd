@@ -10,7 +10,7 @@ func TestParseLineFindsTheFirstAndLastNumbersInALineWithTwoNumbers(t *testing.T)
 	t.Parallel()
 	str := "1abc2"
 	want := 12
-	got := parseLine(str)
+	got := parseLine(str, false)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
@@ -20,7 +20,7 @@ func TestParseLineFindsTheFirstAndLastNumbersInALineWithTwoNumbersWithCharacters
 	t.Parallel()
 	str := "pqr3stu8vwx"
 	want := 38
-	got := parseLine(str)
+	got := parseLine(str, false)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
@@ -30,7 +30,7 @@ func TestParseLineFindsTheFirstAndLastNumbersWithMultipleNumbers(t *testing.T) {
 	t.Parallel()
 	str := "a1b2c3d4e5f"
 	want := 15
-	got := parseLine(str)
+	got := parseLine(str, false)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
@@ -40,7 +40,7 @@ func TestParseLineFindsTheFirstAndLastNumbersWithASingleNumber(t *testing.T) {
 	t.Parallel()
 	str := "treb7uchet"
 	want := 77
-	got := parseLine(str)
+	got := parseLine(str, false)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
@@ -57,7 +57,7 @@ func TestSumLinesWillAddAllResults(t *testing.T) {
 		"treb7uchet",
 	}
 	for _, line := range lines {
-		got = Solve(got, line)
+		got = Solve(got, line, false)
 	}
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
@@ -89,7 +89,7 @@ func TestParseLineCanFindValidDigitStringsInLine(t *testing.T) {
 	t.Parallel()
 	line := "two1nine"
 	want := 29
-	got := parseLine(line)
+	got := parseLine(line, true)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
@@ -109,7 +109,7 @@ func TestParseLineCanFindValidDigitStringsInAllTestLines(t *testing.T) {
 	want := 281
 	got := 0
 	for _, line := range lines {
-		got = Solve(got, line)
+		got = Solve(got, line, true)
 	}
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)

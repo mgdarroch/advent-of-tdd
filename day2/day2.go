@@ -51,7 +51,7 @@ func buildGameInfo(input string, gameId int) GameInfo {
 	var games []Game
 	gamesStr := strings.Split(gameData, ";")
 	for _, game := range gamesStr {
-		trimStr := strings.TrimSpace(game)
+		trimStr := strings.ReplaceAll(game, " ", "")
 		cubes := strings.Split(trimStr, ";")
 		for _, session := range cubes {
 			trimSession := tidyInput(session)
@@ -108,8 +108,7 @@ func extractGameId(input string) int {
 }
 
 func tidyInput(session string) string {
-	trimSession := strings.ReplaceAll(session, " ", "")
-	trimSession = strings.ReplaceAll(trimSession, "red", "r")
+	trimSession := strings.ReplaceAll(session, "red", "r")
 	trimSession = strings.ReplaceAll(trimSession, "green", "g")
 	trimSession = strings.ReplaceAll(trimSession, "blue", "b")
 	return trimSession
