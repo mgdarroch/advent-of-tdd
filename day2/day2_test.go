@@ -25,9 +25,26 @@ So we add up 1, 2, 5 and get the answer of 8.
 func TestParseLineShouldReturnTheIdIfGameIsPossible(t *testing.T) {
 	t.Parallel()
 	validGame := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	games := [3]day2.Game{
+		{
+			RedCount:   4,
+			BlueCount:  3,
+			GreenCount: 0,
+		},
+		{
+			RedCount:   1,
+			BlueCount:  6,
+			GreenCount: 2,
+		},
+		{
+			RedCount:   0,
+			BlueCount:  0,
+			GreenCount: 2,
+		},
+	}
 	want := day2.GameInfo{
 		Id:       1,
-		GameData: "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
+		GameData: games,
 	}
 	got, _ := day2.ParseLine(validGame)
 	if want != got {
@@ -38,9 +55,26 @@ func TestParseLineShouldReturnTheIdIfGameIsPossible(t *testing.T) {
 func TestParseLineShouldReturnDoubleDigitIdIfGameIsPossible(t *testing.T) {
 	t.Parallel()
 	validGame := "Game 10: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	games := [3]day2.Game{
+		{
+			RedCount:   4,
+			BlueCount:  3,
+			GreenCount: 0,
+		},
+		{
+			RedCount:   1,
+			BlueCount:  6,
+			GreenCount: 2,
+		},
+		{
+			RedCount:   0,
+			BlueCount:  0,
+			GreenCount: 2,
+		},
+	}
 	want := day2.GameInfo{
 		Id:       10,
-		GameData: "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
+		GameData: games,
 	}
 	got, _ := day2.ParseLine(validGame)
 	if want != got {
@@ -59,7 +93,27 @@ func TestParseLineShouldReturnErrIfTheGameIsImpossible(t *testing.T) {
 
 func TestValidateGameShouldReturnABooleanIfGameIsValid(t *testing.T) {
 	t.Parallel()
-	validGame := day2.GameInfo{Id: 10, GameData: "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"}
+	games := [3]day2.Game{
+		{
+			RedCount:   4,
+			BlueCount:  3,
+			GreenCount: 0,
+		},
+		{
+			RedCount:   1,
+			BlueCount:  6,
+			GreenCount: 2,
+		},
+		{
+			RedCount:   0,
+			BlueCount:  0,
+			GreenCount: 2,
+		},
+	}
+	validGame := day2.GameInfo{
+		Id:       10,
+		GameData: games,
+	}
 	got := day2.ValidateGame(validGame)
 	if !got {
 		t.Errorf("expected true, got %t", got)
