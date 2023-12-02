@@ -11,6 +11,10 @@ type GameInfo struct {
 	GameData string
 }
 
+func ValidateGame(info GameInfo) bool {
+	return true
+}
+
 func ParseLine(input string) (GameInfo, error) {
 	gameId := extractGameId(input)
 	game := extractGameData(input, gameId)
