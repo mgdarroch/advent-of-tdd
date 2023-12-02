@@ -18,7 +18,22 @@ type Game struct {
 }
 
 func ValidateGame(info GameInfo) bool {
-	return true
+	maxRed := 12
+	maxGreen := 13
+	maxBlue := 14
+	valid := true
+	for _, game := range info.GameData {
+		if game.RedCount > maxRed {
+			valid = false
+		}
+		if game.GreenCount > maxGreen {
+			valid = false
+		}
+		if game.BlueCount > maxBlue {
+			valid = false
+		}
+	}
+	return valid
 }
 
 func ParseLine(input string) (GameInfo, error) {
