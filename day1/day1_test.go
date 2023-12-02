@@ -57,7 +57,7 @@ func TestSumLinesWillAddAllResults(t *testing.T) {
 		"treb7uchet",
 	}
 	for _, line := range lines {
-		got = SumLines(got, line)
+		got = SolveDay1(got, line)
 	}
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
@@ -109,7 +109,7 @@ func TestParseLineCanFindValidDigitStringsInAllTestLines(t *testing.T) {
 	want := 281
 	got := 0
 	for _, line := range lines {
-		got = SumLines(got, line)
+		got = SolveDay1(got, line)
 	}
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)

@@ -24,7 +24,7 @@ func solutionDay1() {
 	answer := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-		answer = day1.SumLines(answer, line)
+		answer = day1.SolveDay1(answer, line)
 	}
 	fmt.Println(answer)
 }
