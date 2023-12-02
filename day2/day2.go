@@ -1,6 +1,7 @@
 package day2
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -25,17 +26,24 @@ func ValidateGame(sum int, input string) int {
 	newSum := sum
 	for _, game := range info.GameData {
 		if game.RedCount > maxRed {
+			fmt.Println("Invalid, Red > 12")
+			fmt.Println(info.Id, game)
 			valid = false
 		}
 		if game.GreenCount > maxGreen {
+			fmt.Println("Invalid, Green > 13")
+			fmt.Println(info.Id, game)
 			valid = false
 		}
 		if game.BlueCount > maxBlue {
+			fmt.Println("Invalid, Blue > 14")
+			fmt.Println(info.Id, game)
 			valid = false
 		}
 	}
 
 	if valid {
+		fmt.Println("adding game with ID: ", info.Id)
 		newSum += info.Id
 	}
 	return newSum
@@ -51,6 +59,8 @@ func extractGameData(input string, gameId int) GameInfo {
 	var gameData string
 	if gameId >= 10 {
 		gameData = input[9:]
+	} else if gameId == 100 {
+		gameData = input[7:]
 	} else {
 		gameData = input[8:]
 	}
@@ -101,8 +111,10 @@ func extractGameId(input string) int {
 	var gameId int
 	if input[6:7] == ":" {
 		gameId, _ = strconv.Atoi(input[5:6])
-	} else {
+	} else if input[7:8] == ":" {
 		gameId, _ = strconv.Atoi(input[5:7])
+	} else {
+		gameId, _ = strconv.Atoi(input[5:8])
 	}
 	return gameId
 }
