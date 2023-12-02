@@ -92,7 +92,7 @@ func TestParseLineShouldReturnErrIfTheGameIsImpossible(t *testing.T) {
 	}
 }
 
-func TestValidateGameShouldReturnABooleanIfGameIsValid(t *testing.T) {
+func TestValidateGameShouldReturnTrueIfGameIsValid(t *testing.T) {
 	t.Parallel()
 	games := []day2.Game{
 		{
@@ -118,5 +118,34 @@ func TestValidateGameShouldReturnABooleanIfGameIsValid(t *testing.T) {
 	got := day2.ValidateGame(validGame)
 	if !got {
 		t.Errorf("expected true, got %t", got)
+	}
+}
+
+func TestValidateGameShouldReturnFalseIfGameIsValid(t *testing.T) {
+	t.Parallel()
+	games := []day2.Game{
+		{
+			RedCount:   20,
+			BlueCount:  6,
+			GreenCount: 8,
+		},
+		{
+			RedCount:   4,
+			BlueCount:  5,
+			GreenCount: 13,
+		},
+		{
+			RedCount:   1,
+			BlueCount:  0,
+			GreenCount: 5,
+		},
+	}
+	validGame := day2.GameInfo{
+		Id:       10,
+		GameData: games,
+	}
+	got := day2.ValidateGame(validGame)
+	if got {
+		t.Errorf("expected false, got %t", got)
 	}
 }
