@@ -70,14 +70,15 @@ func extractGameData(input string, gameId int) GameInfo {
 
 			sessionSplit := strings.Split(trimSession, ",")
 			for _, cube := range sessionSplit {
-				if strings.Contains(cube, "r") {
-					redCount, _ = strconv.Atoi(cube[:len(cube)-1])
-				}
-				if strings.Contains(cube, "g") {
-					greenCount, _ = strconv.Atoi(cube[:len(cube)-1])
-				}
-				if strings.Contains(cube, "b") {
-					blueCount, _ = strconv.Atoi(cube[:len(cube)-1])
+				colour := cube[len(cube)-1:]
+				number, _ := strconv.Atoi(cube[:len(cube)-1])
+				switch colour {
+				case "b":
+					blueCount = number
+				case "g":
+					greenCount = number
+				case "r":
+					redCount = number
 				}
 			}
 			games = append(games, Game{
