@@ -2,14 +2,13 @@ package day2
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 )
 
 type GameInfo struct {
 	Id       int
-	GameData [3]Game
+	GameData []Game
 }
 
 type Game struct {
@@ -39,23 +38,41 @@ func extractGameData(input string, gameId int) GameInfo {
 	} else {
 		gameData = input[8:]
 	}
-	fmt.Println(gameData)
-	games := [3]Game{
-		{
-			RedCount:   4,
-			BlueCount:  3,
-			GreenCount: 0,
-		},
-		{
-			RedCount:   1,
-			BlueCount:  6,
-			GreenCount: 2,
-		},
-		{
-			RedCount:   0,
-			BlueCount:  0,
-			GreenCount: 2,
-		},
+
+	var games []Game
+	gamesStr := strings.Split(gameData, ";")
+	for _, game := range gamesStr {
+		var cutset = " "
+		trimStr := strings.Trim(game, cutset)
+		cubes := strings.Split(trimStr, ";")
+		for _, session := range cubes {
+			trimSession := strings.ReplaceAll(session, " ", "")
+			trimSession = strings.ReplaceAll(trimSession, "red", "r")
+			trimSession = strings.ReplaceAll(trimSession, "green", "g")
+			trimSession = strings.ReplaceAll(trimSession, "blue", "b")
+
+			redCount := 0
+			greenCount := 0
+			blueCount := 0
+
+			sessionSplit := strings.Split(trimSession, ",")
+			for _, cube := range sessionSplit {
+				if strings.Contains(cube, "r") {
+					redCount, _ = strconv.Atoi(cube[0:1])
+				}
+				if strings.Contains(cube, "g") {
+					greenCount, _ = strconv.Atoi(cube[0:1])
+				}
+				if strings.Contains(cube, "b") {
+					blueCount, _ = strconv.Atoi(cube[0:1])
+				}
+			}
+			games = append(games, Game{
+				RedCount:   redCount,
+				BlueCount:  blueCount,
+				GreenCount: greenCount,
+			})
+		}
 	}
 	gameInfo := GameInfo{
 		Id:       gameId,

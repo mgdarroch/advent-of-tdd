@@ -2,6 +2,7 @@ package day2_test
 
 import (
 	"aoctdd/day2"
+	"github.com/google/go-cmp/cmp"
 	"testing"
 )
 
@@ -25,7 +26,7 @@ So we add up 1, 2, 5 and get the answer of 8.
 func TestParseLineShouldReturnTheIdIfGameIsPossible(t *testing.T) {
 	t.Parallel()
 	validGame := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-	games := [3]day2.Game{
+	games := []day2.Game{
 		{
 			RedCount:   4,
 			BlueCount:  3,
@@ -47,7 +48,7 @@ func TestParseLineShouldReturnTheIdIfGameIsPossible(t *testing.T) {
 		GameData: games,
 	}
 	got, _ := day2.ParseLine(validGame)
-	if want != got {
+	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
@@ -55,7 +56,7 @@ func TestParseLineShouldReturnTheIdIfGameIsPossible(t *testing.T) {
 func TestParseLineShouldReturnDoubleDigitIdIfGameIsPossible(t *testing.T) {
 	t.Parallel()
 	validGame := "Game 10: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-	games := [3]day2.Game{
+	games := []day2.Game{
 		{
 			RedCount:   4,
 			BlueCount:  3,
@@ -77,7 +78,7 @@ func TestParseLineShouldReturnDoubleDigitIdIfGameIsPossible(t *testing.T) {
 		GameData: games,
 	}
 	got, _ := day2.ParseLine(validGame)
-	if want != got {
+	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
@@ -93,7 +94,7 @@ func TestParseLineShouldReturnErrIfTheGameIsImpossible(t *testing.T) {
 
 func TestValidateGameShouldReturnABooleanIfGameIsValid(t *testing.T) {
 	t.Parallel()
-	games := [3]day2.Game{
+	games := []day2.Game{
 		{
 			RedCount:   4,
 			BlueCount:  3,
