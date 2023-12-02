@@ -41,19 +41,12 @@ func ValidateGame(input string, cubeSum int, powerSum int) (validSum int, cubePo
 
 func ParseLine(input string) GameInfo {
 	gameId := extractGameId(input)
-	game := extractGameData(input, gameId)
+	game := buildGameInfo(input, gameId)
 	return game
 }
 
-func extractGameData(input string, gameId int) GameInfo {
-	var gameData string
-	if gameId >= 10 {
-		gameData = input[9:]
-	} else if gameId == 100 {
-		gameData = input[7:]
-	} else {
-		gameData = input[8:]
-	}
+func buildGameInfo(input string, gameId int) GameInfo {
+	gameData := extractGameData(input, gameId)
 
 	var games []Game
 	gamesStr := strings.Split(gameData, ";")
@@ -61,13 +54,8 @@ func extractGameData(input string, gameId int) GameInfo {
 		trimStr := strings.TrimSpace(game)
 		cubes := strings.Split(trimStr, ";")
 		for _, session := range cubes {
-			trimSession := strings.ReplaceAll(session, " ", "")
-			trimSession = strings.ReplaceAll(trimSession, "red", "r")
-			trimSession = strings.ReplaceAll(trimSession, "green", "g")
-			trimSession = strings.ReplaceAll(trimSession, "blue", "b")
-
+			trimSession := tidyInput(session)
 			redCount, greenCount, blueCount := 0, 0, 0
-
 			sessionSplit := strings.Split(trimSession, ",")
 			for _, cube := range sessionSplit {
 				colour := cube[len(cube)-1:]
@@ -95,6 +83,18 @@ func extractGameData(input string, gameId int) GameInfo {
 	return gameInfo
 }
 
+func extractGameData(input string, gameId int) string {
+	var gameData string
+	if gameId >= 10 {
+		gameData = input[9:]
+	} else if gameId == 100 {
+		gameData = input[7:]
+	} else {
+		gameData = input[8:]
+	}
+	return gameData
+}
+
 func extractGameId(input string) int {
 	var gameId int
 	if input[6:7] == ":" {
@@ -105,4 +105,12 @@ func extractGameId(input string) int {
 		gameId, _ = strconv.Atoi(input[5:8])
 	}
 	return gameId
+}
+
+func tidyInput(session string) string {
+	trimSession := strings.ReplaceAll(session, " ", "")
+	trimSession = strings.ReplaceAll(trimSession, "red", "r")
+	trimSession = strings.ReplaceAll(trimSession, "green", "g")
+	trimSession = strings.ReplaceAll(trimSession, "blue", "b")
+	return trimSession
 }
