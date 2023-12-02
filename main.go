@@ -36,10 +36,11 @@ func solutionDay2() {
 	}
 	defer f.Close()
 	scanner := bufio.NewScanner(f)
-	answer := 0
+	idSum := 0
+	powerSum := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-		answer = day2.ValidateGame(answer, line)
+		idSum, powerSum = day2.ValidateGame(line, idSum, powerSum)
 	}
-	fmt.Println(answer)
+	fmt.Printf("ID: %d, Power: %d", idSum, powerSum)
 }
