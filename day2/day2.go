@@ -16,8 +16,8 @@ type Game struct {
 	GreenCount int
 }
 
-func ValidateGame(input string, cubeSum int, powerSum int) (validSum int, cubePower int) {
-	info := ParseLine(input)
+func Solve(input string, cubeSum int, powerSum int) (validSum int, cubePower int) {
+	info := parseLine(input)
 	redLimit, greenLimit, blueLimit := 12, 13, 14
 	maxRed, maxGreen, maxBlue := 0, 0, 0
 
@@ -39,7 +39,7 @@ func ValidateGame(input string, cubeSum int, powerSum int) (validSum int, cubePo
 	return newSum, newPower
 }
 
-func ParseLine(input string) GameInfo {
+func parseLine(input string) GameInfo {
 	gameId := extractGameId(input)
 	game := buildGameInfo(input, gameId)
 	return game

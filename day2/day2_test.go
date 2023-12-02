@@ -1,7 +1,6 @@
-package day2_test
+package day2
 
 import (
-	"aoctdd/day2"
 	"github.com/google/go-cmp/cmp"
 	"testing"
 )
@@ -26,7 +25,7 @@ So we add up 1, 2, 5 and get the answer of 8.
 func TestParseLineShouldReturnTheIdIfGameIsPossible(t *testing.T) {
 	t.Parallel()
 	validGame := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-	games := []day2.Game{
+	games := []Game{
 		{
 			RedCount:   4,
 			BlueCount:  3,
@@ -43,11 +42,11 @@ func TestParseLineShouldReturnTheIdIfGameIsPossible(t *testing.T) {
 			GreenCount: 2,
 		},
 	}
-	want := day2.GameInfo{
+	want := GameInfo{
 		Id:       1,
 		GameData: games,
 	}
-	got := day2.ParseLine(validGame)
+	got := parseLine(validGame)
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
@@ -56,7 +55,7 @@ func TestParseLineShouldReturnTheIdIfGameIsPossible(t *testing.T) {
 func TestParseLineShouldReturnDoubleDigitIdIfGameIsPossible(t *testing.T) {
 	t.Parallel()
 	validGame := "Game 10: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-	games := []day2.Game{
+	games := []Game{
 		{
 			RedCount:   4,
 			BlueCount:  3,
@@ -73,11 +72,11 @@ func TestParseLineShouldReturnDoubleDigitIdIfGameIsPossible(t *testing.T) {
 			GreenCount: 2,
 		},
 	}
-	want := day2.GameInfo{
+	want := GameInfo{
 		Id:       10,
 		GameData: games,
 	}
-	got := day2.ParseLine(validGame)
+	got := parseLine(validGame)
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
@@ -86,7 +85,7 @@ func TestParseLineShouldReturnDoubleDigitIdIfGameIsPossible(t *testing.T) {
 func TestParseLineShouldReturnTripleDigitIdIfGameIsPossible(t *testing.T) {
 	t.Parallel()
 	validGame := "Game 100: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-	games := []day2.Game{
+	games := []Game{
 		{
 			RedCount:   4,
 			BlueCount:  3,
@@ -103,11 +102,11 @@ func TestParseLineShouldReturnTripleDigitIdIfGameIsPossible(t *testing.T) {
 			GreenCount: 2,
 		},
 	}
-	want := day2.GameInfo{
+	want := GameInfo{
 		Id:       100,
 		GameData: games,
 	}
-	got := day2.ParseLine(validGame)
+	got := parseLine(validGame)
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
@@ -117,7 +116,7 @@ func TestValidateGameShouldReturnIncrementedSumIfGameIsValid(t *testing.T) {
 	t.Parallel()
 	want := 1
 	line := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-	gotSum, _ := day2.ValidateGame(line, 0, 0)
+	gotSum, _ := Solve(line, 0, 0)
 	if want != gotSum {
 		t.Errorf("want %d, got %d", want, gotSum)
 	}
@@ -127,7 +126,7 @@ func TestValidateGameShouldReturnSameSumIfGameIsInvalid(t *testing.T) {
 	t.Parallel()
 	want := 0
 	line := "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"
-	got, _ := day2.ValidateGame(line, 0, 0)
+	got, _ := Solve(line, 0, 0)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
@@ -137,7 +136,7 @@ func TestValidateGameShouldReturnSameSumIfGameIsInvalidMoreThanThreeSessions(t *
 	t.Parallel()
 	want := 0
 	line := "Game 11: 2 red, 18 blue, 5 green; 4 green, 12 blue, 9 red; 6 red, 4 green, 5 blue; 8 red, 16 blue, 2 green; 1 green, 18 blue, 13 red; 13 blue, 9 red"
-	got, _ := day2.ValidateGame(line, 0, 0)
+	got, _ := Solve(line, 0, 0)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
@@ -155,7 +154,7 @@ func TestValidateGameCalledOverExampleInputReturnsCorrectIdSum(t *testing.T) {
 	want := 8
 	got := 0
 	for _, line := range lines {
-		got, _ = day2.ValidateGame(line, got, 0)
+		got, _ = Solve(line, got, 0)
 	}
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
@@ -166,7 +165,7 @@ func TestValidateGameReturnsTheSumOfThePowerOfMinimumCubesTotal48(t *testing.T) 
 	t.Parallel()
 	wantPower := 48
 	line := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-	_, gotPower := day2.ValidateGame(line, 0, 0)
+	_, gotPower := Solve(line, 0, 0)
 	if wantPower != gotPower {
 		t.Errorf("want %d, got %d", wantPower, gotPower)
 	}
@@ -176,7 +175,7 @@ func TestValidateGameReturnsTheSumOfThePowerOfMinimumCubesTotal1560(t *testing.T
 	t.Parallel()
 	wantPower := 1560
 	line := "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"
-	_, gotPower := day2.ValidateGame(line, 0, 0)
+	_, gotPower := Solve(line, 0, 0)
 	if wantPower != gotPower {
 		t.Errorf("want %d, got %d", wantPower, gotPower)
 	}
@@ -194,9 +193,36 @@ func TestValidateGameCalledOverExampleInputReturnsCorrectPowerSum(t *testing.T) 
 	want := 2286
 	got := 0
 	for _, line := range lines {
-		_, got = day2.ValidateGame(line, 0, got)
+		_, got = Solve(line, 0, got)
 	}
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
+func TestTidyInput(t *testing.T) {
+	line := "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	want := "3b,4r;1r,2g,6b;2g"
+	got := tidyInput(line)
+	if want != got {
+		t.Errorf("want %s, want %s", want, got)
+	}
+}
+
+func TestExtractGameId(t *testing.T) {
+	line := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	want := 1
+	got := extractGameId(line)
+	if want != got {
+		t.Errorf("want %d, want %d", want, got)
+	}
+}
+
+func TestExtractGameData(t *testing.T) {
+	line := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	want := "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	got := extractGameData(line, 1)
+	if want != got {
+		t.Errorf("want %s, want %s", want, got)
 	}
 }
