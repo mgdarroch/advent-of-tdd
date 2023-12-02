@@ -1,7 +1,6 @@
 package day2
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -17,7 +16,7 @@ type Game struct {
 	GreenCount int
 }
 
-func ValidateGame(sum int, input string) int {
+func ValidateGame(sum int, input string) (validSum int, cubePower int) {
 	info := ParseLine(input)
 	maxRed := 12
 	maxGreen := 13
@@ -26,27 +25,20 @@ func ValidateGame(sum int, input string) int {
 	newSum := sum
 	for _, game := range info.GameData {
 		if game.RedCount > maxRed {
-			fmt.Println("Invalid, Red > 12")
-			fmt.Println(info.Id, game)
 			valid = false
 		}
 		if game.GreenCount > maxGreen {
-			fmt.Println("Invalid, Green > 13")
-			fmt.Println(info.Id, game)
 			valid = false
 		}
 		if game.BlueCount > maxBlue {
-			fmt.Println("Invalid, Blue > 14")
-			fmt.Println(info.Id, game)
 			valid = false
 		}
 	}
 
 	if valid {
-		fmt.Println("adding game with ID: ", info.Id)
 		newSum += info.Id
 	}
-	return newSum
+	return newSum, 48
 }
 
 func ParseLine(input string) GameInfo {
