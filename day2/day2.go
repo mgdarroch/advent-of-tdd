@@ -13,12 +13,16 @@ type GameInfo struct {
 
 func ParseLine(input string) (GameInfo, error) {
 	gameId := extractGameId(input)
-
+	var gameData string
+	if gameId >= 10 {
+		gameData = input[9:]
+	} else {
+		gameData = input[8:]
+	}
 	game := GameInfo{
 		Id:       gameId,
-		GameData: "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
+		GameData: gameData,
 	}
-
 	if strings.Contains(input, "Game 1") {
 		return game, nil
 	} else {
