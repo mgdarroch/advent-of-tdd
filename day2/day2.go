@@ -1,7 +1,7 @@
 package day2
 
 import (
-	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -17,13 +17,15 @@ type Game struct {
 	GreenCount int
 }
 
-func ValidateGame(sum int, info GameInfo) int {
+func ValidateGame(sum int, input string) int {
+	info := ParseLine(input)
 	maxRed := 12
 	maxGreen := 13
 	maxBlue := 14
 	valid := true
 	newSum := sum
 	for _, game := range info.GameData {
+		fmt.Println(game)
 		if game.RedCount > maxRed {
 			valid = false
 		}
@@ -41,14 +43,10 @@ func ValidateGame(sum int, info GameInfo) int {
 	return newSum
 }
 
-func ParseLine(input string) (GameInfo, error) {
+func ParseLine(input string) GameInfo {
 	gameId := extractGameId(input)
 	game := extractGameData(input, gameId)
-	if strings.Contains(input, "Game 1") {
-		return game, nil
-	} else {
-		return GameInfo{}, errors.New("invalid game")
-	}
+	return game
 }
 
 func extractGameData(input string, gameId int) GameInfo {
@@ -77,14 +75,15 @@ func extractGameData(input string, gameId int) GameInfo {
 
 			sessionSplit := strings.Split(trimSession, ",")
 			for _, cube := range sessionSplit {
+				fmt.Println(cube)
 				if strings.Contains(cube, "r") {
-					redCount, _ = strconv.Atoi(cube[0:1])
+					redCount, _ = strconv.Atoi(cube[:len(cube)-1])
 				}
 				if strings.Contains(cube, "g") {
-					greenCount, _ = strconv.Atoi(cube[0:1])
+					greenCount, _ = strconv.Atoi(cube[:len(cube)-1])
 				}
 				if strings.Contains(cube, "b") {
-					blueCount, _ = strconv.Atoi(cube[0:1])
+					blueCount, _ = strconv.Atoi(cube[:len(cube)-1])
 				}
 			}
 			games = append(games, Game{
