@@ -17,11 +17,12 @@ type Game struct {
 	GreenCount int
 }
 
-func ValidateGame(info GameInfo) bool {
+func ValidateGame(sum int, info GameInfo) int {
 	maxRed := 12
 	maxGreen := 13
 	maxBlue := 14
 	valid := true
+	newSum := sum
 	for _, game := range info.GameData {
 		if game.RedCount > maxRed {
 			valid = false
@@ -33,7 +34,11 @@ func ValidateGame(info GameInfo) bool {
 			valid = false
 		}
 	}
-	return valid
+
+	if valid {
+		newSum += info.Id
+	}
+	return newSum
 }
 
 func ParseLine(input string) (GameInfo, error) {
