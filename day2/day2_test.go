@@ -199,3 +199,30 @@ func TestValidateGameCalledOverExampleInputReturnsCorrectPowerSum(t *testing.T) 
 		t.Errorf("want %d, got %d", want, got)
 	}
 }
+
+func TestTidyInput(t *testing.T) {
+	line := "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	want := "3b,4r;1r,2g,6b;2g"
+	got := tidyInput(line)
+	if want != got {
+		t.Errorf("want %s, want %s", want, got)
+	}
+}
+
+func TestExtractGameId(t *testing.T) {
+	line := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	want := 1
+	got := extractGameId(line)
+	if want != got {
+		t.Errorf("want %d, want %d", want, got)
+	}
+}
+
+func TestExtractGameData(t *testing.T) {
+	line := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	want := "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	got := extractGameData(line, 1)
+	if want != got {
+		t.Errorf("want %s, want %s", want, got)
+	}
+}
