@@ -117,9 +117,9 @@ func TestValidateGameShouldReturnIncrementedSumIfGameIsValid(t *testing.T) {
 	t.Parallel()
 	want := 1
 	line := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-	got := day2.ValidateGame(0, line)
-	if want != got {
-		t.Errorf("want %d, got %d", want, got)
+	gotSum, _ := day2.ValidateGame(0, line)
+	if want != gotSum {
+		t.Errorf("want %d, got %d", want, gotSum)
 	}
 }
 
@@ -127,7 +127,7 @@ func TestValidateGameShouldReturnSameSumIfGameIsInvalid(t *testing.T) {
 	t.Parallel()
 	want := 0
 	line := "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"
-	got := day2.ValidateGame(0, line)
+	got, _ := day2.ValidateGame(0, line)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
@@ -137,13 +137,14 @@ func TestValidateGameShouldReturnSameSumIfGameIsInvalidMoreThanThreeSessions(t *
 	t.Parallel()
 	want := 0
 	line := "Game 11: 2 red, 18 blue, 5 green; 4 green, 12 blue, 9 red; 6 red, 4 green, 5 blue; 8 red, 16 blue, 2 green; 1 green, 18 blue, 13 red; 13 blue, 9 red"
-	got := day2.ValidateGame(0, line)
+	got, _ := day2.ValidateGame(0, line)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
 }
 
 func TestValidateGameCalledOverExampleInputReturns8(t *testing.T) {
+	t.Parallel()
 	lines := [5]string{
 		"Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
 		"Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue",
@@ -154,9 +155,19 @@ func TestValidateGameCalledOverExampleInputReturns8(t *testing.T) {
 	want := 8
 	got := 0
 	for _, line := range lines {
-		got = day2.ValidateGame(got, line)
+		got, _ = day2.ValidateGame(got, line)
 	}
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
+func TestValidateGameReturnsTheSumOfThePowerOfMinimumCubes(t *testing.T) {
+	t.Parallel()
+	wantPower := 48
+	line := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	_, gotPower := day2.ValidateGame(0, line)
+	if wantPower != gotPower {
+		t.Errorf("want %d, got %d", wantPower, gotPower)
 	}
 }
