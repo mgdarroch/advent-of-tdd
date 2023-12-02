@@ -58,8 +58,7 @@ func extractGameData(input string, gameId int) GameInfo {
 	var games []Game
 	gamesStr := strings.Split(gameData, ";")
 	for _, game := range gamesStr {
-		var cutset = " "
-		trimStr := strings.Trim(game, cutset)
+		trimStr := strings.TrimSpace(game)
 		cubes := strings.Split(trimStr, ";")
 		for _, session := range cubes {
 			trimSession := strings.ReplaceAll(session, " ", "")
@@ -67,9 +66,7 @@ func extractGameData(input string, gameId int) GameInfo {
 			trimSession = strings.ReplaceAll(trimSession, "green", "g")
 			trimSession = strings.ReplaceAll(trimSession, "blue", "b")
 
-			redCount := 0
-			greenCount := 0
-			blueCount := 0
+			redCount, greenCount, blueCount := 0, 0, 0
 
 			sessionSplit := strings.Split(trimSession, ",")
 			for _, cube := range sessionSplit {
