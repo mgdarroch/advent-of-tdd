@@ -162,10 +162,20 @@ func TestValidateGameCalledOverExampleInputReturns8(t *testing.T) {
 	}
 }
 
-func TestValidateGameReturnsTheSumOfThePowerOfMinimumCubes(t *testing.T) {
+func TestValidateGameReturnsTheSumOfThePowerOfMinimumCubesTotal48(t *testing.T) {
 	t.Parallel()
 	wantPower := 48
 	line := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	_, gotPower := day2.ValidateGame(0, line)
+	if wantPower != gotPower {
+		t.Errorf("want %d, got %d", wantPower, gotPower)
+	}
+}
+
+func TestValidateGameReturnsTheSumOfThePowerOfMinimumCubesTotal1560(t *testing.T) {
+	t.Parallel()
+	wantPower := 1560
+	line := "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"
 	_, gotPower := day2.ValidateGame(0, line)
 	if wantPower != gotPower {
 		t.Errorf("want %d, got %d", wantPower, gotPower)
