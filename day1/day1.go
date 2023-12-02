@@ -46,7 +46,7 @@ func parseLine(input string) int {
 	return first*10 + last
 }
 
-func SolveDay1(sum int, input string) int {
+func Solve(sum int, input string) int {
 	result := sum
 	result += parseLine(input)
 	return result

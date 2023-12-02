@@ -24,7 +24,7 @@ func solutionDay1() {
 	answer := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-		answer = day1.SolveDay1(answer, line)
+		answer = day1.Solve(answer, line)
 	}
 	fmt.Println(answer)
 }
@@ -40,7 +40,7 @@ func solutionDay2() {
 	powerSum := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-		idSum, powerSum = day2.ValidateGame(line, idSum, powerSum)
+		idSum, powerSum = day2.Solve(line, idSum, powerSum)
 	}
 	fmt.Printf("ID: %d, Power: %d", idSum, powerSum)
 }
