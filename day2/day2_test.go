@@ -83,6 +83,36 @@ func TestParseLineShouldReturnDoubleDigitIdIfGameIsPossible(t *testing.T) {
 	}
 }
 
+func TestParseLineShouldReturnTripleDigitIdIfGameIsPossible(t *testing.T) {
+	t.Parallel()
+	validGame := "Game 100: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	games := []day2.Game{
+		{
+			RedCount:   4,
+			BlueCount:  3,
+			GreenCount: 0,
+		},
+		{
+			RedCount:   1,
+			BlueCount:  6,
+			GreenCount: 2,
+		},
+		{
+			RedCount:   0,
+			BlueCount:  0,
+			GreenCount: 2,
+		},
+	}
+	want := day2.GameInfo{
+		Id:       100,
+		GameData: games,
+	}
+	got := day2.ParseLine(validGame)
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
 func TestValidateGameShouldReturnIncrementedSumIfGameIsValid(t *testing.T) {
 	t.Parallel()
 	want := 1
@@ -97,6 +127,16 @@ func TestValidateGameShouldReturnSameSumIfGameIsInvalid(t *testing.T) {
 	t.Parallel()
 	want := 0
 	line := "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"
+	got := day2.ValidateGame(0, line)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
+func TestValidateGameShouldReturnSameSumIfGameIsInvalidMoreThanThreeSessions(t *testing.T) {
+	t.Parallel()
+	want := 0
+	line := "Game 11: 2 red, 18 blue, 5 green; 4 green, 12 blue, 9 red; 6 red, 4 green, 5 blue; 8 red, 16 blue, 2 green; 1 green, 18 blue, 13 red; 13 blue, 9 red"
 	got := day2.ValidateGame(0, line)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
