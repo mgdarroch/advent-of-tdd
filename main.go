@@ -28,7 +28,7 @@ func solutionDay1() {
 		part1Answer = day1.Solve(part1Answer, line, false)
 		part2Answer = day1.Solve(part2Answer, line, true)
 	}
-	fmt.Printf("Part 1: %d Part 2: %d\n", part1Answer, part2Answer)
+	fmt.Printf("Day 1 => Part 1: %d Part 2: %d\n", part1Answer, part2Answer)
 }
 
 func solutionDay2() {
@@ -44,5 +44,5 @@ func solutionDay2() {
 		line := scanner.Text()
 		idSum, powerSum = day2.Solve(line, idSum, powerSum)
 	}
-	fmt.Printf("ID: %d, Power: %d", idSum, powerSum)
+	fmt.Printf("Day 2 => Part 1: %d, Part 2: %d", idSum, powerSum)
 }
