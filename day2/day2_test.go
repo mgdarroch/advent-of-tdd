@@ -62,6 +62,6 @@ func TestValidateGameShouldReturnABooleanIfGameIsValid(t *testing.T) {
 	validGame := day2.GameInfo{Id: 10, GameData: "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"}
 	got := day2.ValidateGame(validGame)
 	if !got {
-		t.Errorf("expected true, got %q", got)
+		t.Errorf("expected true, got %t", got)
 	}
 }
