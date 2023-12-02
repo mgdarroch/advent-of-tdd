@@ -1,7 +1,6 @@
 package day2
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -25,7 +24,6 @@ func ValidateGame(sum int, input string) int {
 	valid := true
 	newSum := sum
 	for _, game := range info.GameData {
-		fmt.Println(game)
 		if game.RedCount > maxRed {
 			valid = false
 		}
@@ -75,7 +73,6 @@ func extractGameData(input string, gameId int) GameInfo {
 
 			sessionSplit := strings.Split(trimSession, ",")
 			for _, cube := range sessionSplit {
-				fmt.Println(cube)
 				if strings.Contains(cube, "r") {
 					redCount, _ = strconv.Atoi(cube[:len(cube)-1])
 				}
