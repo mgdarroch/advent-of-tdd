@@ -2,13 +2,20 @@ package day2
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 )
 
 type GameInfo struct {
 	Id       int
-	GameData string
+	GameData [3]Game
+}
+
+type Game struct {
+	RedCount   int
+	BlueCount  int
+	GreenCount int
 }
 
 func ValidateGame(info GameInfo) bool {
@@ -32,11 +39,29 @@ func extractGameData(input string, gameId int) GameInfo {
 	} else {
 		gameData = input[8:]
 	}
-	game := GameInfo{
-		Id:       gameId,
-		GameData: gameData,
+	fmt.Println(gameData)
+	games := [3]Game{
+		{
+			RedCount:   4,
+			BlueCount:  3,
+			GreenCount: 0,
+		},
+		{
+			RedCount:   1,
+			BlueCount:  6,
+			GreenCount: 2,
+		},
+		{
+			RedCount:   0,
+			BlueCount:  0,
+			GreenCount: 2,
+		},
 	}
-	return game
+	gameInfo := GameInfo{
+		Id:       gameId,
+		GameData: games,
+	}
+	return gameInfo
 }
 
 func extractGameId(input string) int {
