@@ -21,12 +21,14 @@ func solutionDay1() {
 	}
 	defer f.Close()
 	scanner := bufio.NewScanner(f)
-	answer := 0
+	part1Answer := 0
+	part2Answer := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-		answer = day1.Solve(answer, line)
+		part1Answer = day1.Solve(part1Answer, line, false)
+		part2Answer = day1.Solve(part2Answer, line, true)
 	}
-	fmt.Println(answer)
+	fmt.Printf("Part 1: %d Part 2: %d\n", part1Answer, part2Answer)
 }
 
 func solutionDay2() {

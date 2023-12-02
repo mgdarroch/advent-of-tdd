@@ -12,12 +12,15 @@ type DigitString struct {
 	Integer int
 }
 
-func parseLine(input string) int {
+func parseLine(input string, digitStrings bool) int {
 	var first, last int
 	firstSet, lastSet := false, false
 	for i, c := range strings.Split(input, "") {
 		num, err := strconv.Atoi(c)
 		if err != nil {
+			if !digitStrings {
+				continue
+			}
 			digitFromString, err := parseDigitString(input, i)
 			if err != nil {
 				continue
@@ -46,9 +49,9 @@ func parseLine(input string) int {
 	return first*10 + last
 }
 
-func Solve(sum int, input string) int {
+func Solve(sum int, input string, digitStrings bool) int {
 	result := sum
-	result += parseLine(input)
+	result += parseLine(input, digitStrings)
 	return result
 }
 
