@@ -47,7 +47,7 @@ func TestParseLineShouldReturnTheIdIfGameIsPossible(t *testing.T) {
 		Id:       1,
 		GameData: games,
 	}
-	got, _ := day2.ParseLine(validGame)
+	got := day2.ParseLine(validGame)
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
@@ -77,46 +77,17 @@ func TestParseLineShouldReturnDoubleDigitIdIfGameIsPossible(t *testing.T) {
 		Id:       10,
 		GameData: games,
 	}
-	got, _ := day2.ParseLine(validGame)
+	got := day2.ParseLine(validGame)
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
 
-func TestParseLineShouldReturnErrIfTheGameIsImpossible(t *testing.T) {
-	t.Parallel()
-	invalidGame := "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"
-	got, err := day2.ParseLine(invalidGame)
-	if err == nil {
-		t.Errorf("wanted an invalid game error, got %q", got)
-	}
-}
-
 func TestValidateGameShouldReturnIncrementedSumIfGameIsValid(t *testing.T) {
 	t.Parallel()
-	games := []day2.Game{
-		{
-			RedCount:   4,
-			BlueCount:  3,
-			GreenCount: 0,
-		},
-		{
-			RedCount:   1,
-			BlueCount:  6,
-			GreenCount: 2,
-		},
-		{
-			RedCount:   0,
-			BlueCount:  0,
-			GreenCount: 2,
-		},
-	}
-	validGame := day2.GameInfo{
-		Id:       10,
-		GameData: games,
-	}
-	want := 10
-	got := day2.ValidateGame(0, validGame)
+	want := 1
+	line := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	got := day2.ValidateGame(0, line)
 	if want != got {
 		t.Errorf("expected %d, got %d", want, got)
 	}
@@ -124,29 +95,9 @@ func TestValidateGameShouldReturnIncrementedSumIfGameIsValid(t *testing.T) {
 
 func TestValidateGameShouldReturnSameSumIfGameIsInvalid(t *testing.T) {
 	t.Parallel()
-	games := []day2.Game{
-		{
-			RedCount:   20,
-			BlueCount:  6,
-			GreenCount: 8,
-		},
-		{
-			RedCount:   4,
-			BlueCount:  5,
-			GreenCount: 13,
-		},
-		{
-			RedCount:   1,
-			BlueCount:  0,
-			GreenCount: 5,
-		},
-	}
-	invalidGame := day2.GameInfo{
-		Id:       10,
-		GameData: games,
-	}
 	want := 0
-	got := day2.ValidateGame(0, invalidGame)
+	line := "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"
+	got := day2.ValidateGame(0, line)
 	if want != got {
 		t.Errorf("expected %d, got %d", want, got)
 	}
