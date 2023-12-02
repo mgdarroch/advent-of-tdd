@@ -1,7 +1,6 @@
 package day2
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -55,7 +54,6 @@ func buildGameInfo(input string, gameId int) GameInfo {
 		trimStr := strings.ReplaceAll(game, " ", "")
 		cubes := strings.Split(trimStr, ";")
 		for _, session := range cubes {
-			fmt.Println(session)
 			trimSession := tidyInput(session)
 			redCount, greenCount, blueCount := 0, 0, 0
 			sessionSplit := strings.Split(trimSession, ",")
