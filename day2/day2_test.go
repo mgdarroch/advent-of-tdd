@@ -25,20 +25,26 @@ So we add up 1, 2, 5 and get the answer of 8.
 func TestParseLineShouldReturnTheIdIfGameIsPossible(t *testing.T) {
 	t.Parallel()
 	validGame := "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-	want := 1
+	want := day2.GameInfo{
+		Id:       1,
+		GameData: "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
+	}
 	got, _ := day2.ParseLine(validGame)
 	if want != got {
-		t.Errorf("want %d, got %d", want, got)
+		t.Errorf("want %q, got %q", want, got)
 	}
 }
 
 func TestParseLineShouldReturnDoubleDigitIdIfGameIsPossible(t *testing.T) {
 	t.Parallel()
 	validGame := "Game 10: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-	want := 10
+	want := day2.GameInfo{
+		Id:       10,
+		GameData: "3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
+	}
 	got, _ := day2.ParseLine(validGame)
 	if want != got {
-		t.Errorf("want %d, got %d", want, got)
+		t.Errorf("want %q, got %q", want, got)
 	}
 }
 
@@ -47,6 +53,6 @@ func TestParseLineShouldReturnErrIfTheGameIsImpossible(t *testing.T) {
 	invalidGame := "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"
 	got, err := day2.ParseLine(invalidGame)
 	if err == nil {
-		t.Errorf("wanted an invalid game error, got %d", got)
+		t.Errorf("wanted an invalid game error, got %q", got)
 	}
 }
