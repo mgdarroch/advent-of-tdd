@@ -12,13 +12,13 @@ type DigitString struct {
 	Integer int
 }
 
-func ParseLine(input string) int {
+func parseLine(input string) int {
 	var first, last int
 	firstSet, lastSet := false, false
 	for i, c := range strings.Split(input, "") {
 		num, err := strconv.Atoi(c)
 		if err != nil {
-			digitFromString, err := ParseDigitString(input, i)
+			digitFromString, err := parseDigitString(input, i)
 			if err != nil {
 				continue
 			}
@@ -48,11 +48,11 @@ func ParseLine(input string) int {
 
 func SumLines(sum int, input string) int {
 	result := sum
-	result += ParseLine(input)
+	result += parseLine(input)
 	return result
 }
 
-func ParseDigitString(input string, start int) (int, error) {
+func parseDigitString(input string, start int) (int, error) {
 	firstCharMap := map[string][]DigitString{
 		"o": {{"one", 3, 1}},
 		"t": {{"two", 3, 2}, {"three", 5, 3}},
