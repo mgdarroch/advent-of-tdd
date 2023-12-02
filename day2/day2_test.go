@@ -115,9 +115,10 @@ func TestValidateGameShouldReturnIncrementedSumIfGameIsValid(t *testing.T) {
 		Id:       10,
 		GameData: games,
 	}
-	got := day2.ValidateGame(validGame)
+	want := 10
+	got := day2.ValidateGame(0, validGame)
 	if !got {
-		t.Errorf("expected true, got %t", got)
+		t.Errorf("expected %d, got %d", want, got)
 	}
 }
 
@@ -140,12 +141,13 @@ func TestValidateGameShouldReturnSameSumIfGameIsInvalid(t *testing.T) {
 			GreenCount: 5,
 		},
 	}
-	validGame := day2.GameInfo{
+	invalidGame := day2.GameInfo{
 		Id:       10,
 		GameData: games,
 	}
-	got := day2.ValidateGame(validGame)
+	want := 0
+	got := day2.ValidateGame(0, invalidGame)
 	if got {
-		t.Errorf("expected false, got %t", got)
+		t.Errorf("expected %d, got %d", want, got)
 	}
 }
