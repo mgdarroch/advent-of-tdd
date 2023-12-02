@@ -92,7 +92,7 @@ func TestParseLineShouldReturnErrIfTheGameIsImpossible(t *testing.T) {
 	}
 }
 
-func TestValidateGameShouldReturnTrueIfGameIsValid(t *testing.T) {
+func TestValidateGameShouldReturnIncrementedSumIfGameIsValid(t *testing.T) {
 	t.Parallel()
 	games := []day2.Game{
 		{
@@ -121,7 +121,7 @@ func TestValidateGameShouldReturnTrueIfGameIsValid(t *testing.T) {
 	}
 }
 
-func TestValidateGameShouldReturnFalseIfGameIsValid(t *testing.T) {
+func TestValidateGameShouldReturnSameSumIfGameIsInvalid(t *testing.T) {
 	t.Parallel()
 	games := []day2.Game{
 		{
