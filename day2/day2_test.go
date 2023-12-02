@@ -32,6 +32,16 @@ func TestParseLineShouldReturnTheIdIfGameIsPossible(t *testing.T) {
 	}
 }
 
+func TestParseLineShouldReturnDoubleDigitIdIfGameIsPossible(t *testing.T) {
+	t.Parallel()
+	validGame := "Game 10: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
+	want := 10
+	got, _ := day2.ParseLine(validGame)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
 func TestParseLineShouldReturnErrIfTheGameIsImpossible(t *testing.T) {
 	t.Parallel()
 	invalidGame := "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"
