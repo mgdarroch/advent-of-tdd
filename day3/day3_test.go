@@ -1,13 +1,35 @@
 package day3
 
 import (
+	"github.com/google/go-cmp/cmp"
 	"testing"
 )
 
-func TestPlaceholder(t *testing.T) {
-	want := 1
-	got := 1
-	if want != got {
-		t.Errorf("want %d, got %d", want, got)
+func TestLoadInput(t *testing.T) {
+	want := [][]string{
+		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
+		{".", ".", ".", "*", ".", ".", ".", ".", ".", "."},
+	}
+
+	lines := []string{
+		"467..114..",
+		"...*......",
+	}
+	var got [][]string
+	for _, line := range lines {
+		got = loadInput(got, line)
+	}
+
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
 	}
 }
+
+// Basic plan, read the input into a slice of slices
+// iterate over each character and for each number, check the adjacent spaces until a symbol is found
+// if a symbol is found, concatenate the number characters and convert to an integer
+// sum them together
+
+// adjacent spaces will be i+1 and i-1 on the current slice, as well as i-1, i and i+1 on the above and below slices
+
+// should we grab the
