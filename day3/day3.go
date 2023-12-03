@@ -48,3 +48,11 @@ func extractNumbersFromLine(input []string) []Number {
 	}
 	return numbers
 }
+
+func mapNumbersToLines(input [][]string) map[int][]Number {
+	lineToNumbersMap := map[int][]Number{}
+	for i, v := range input {
+		lineToNumbersMap[i] = extractNumbersFromLine(v)
+	}
+	return lineToNumbersMap
+}
