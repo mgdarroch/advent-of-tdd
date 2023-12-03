@@ -27,7 +27,7 @@ func TestLoadInput(t *testing.T) {
 
 func TestExtractNumberStructs(t *testing.T) {
 	line := []string{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."}
-	want := []Numbers{
+	want := []Number{
 		{
 			StartIndex: 0,
 			EndIndex:   2,
