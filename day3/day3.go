@@ -9,6 +9,11 @@ import (
 	"strings"
 )
 
+type GearPosition struct {
+	SymbolIndex int
+	Line        int
+}
+
 type Number struct {
 	StartIndex int
 	EndIndex   int
@@ -64,7 +69,23 @@ func mapNumbersToLines(input [][]string) map[int][]Number {
 	return lineToNumbersMap
 }
 
-func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Number {
+func mapGearPositions(input [][]string) map[GearPosition][]Number {
+	lineToNumbersMap := map[GearPosition][]Number{}
+	for i, v := range input {
+		for j, c := range v {
+			if c == "*" {
+				gearPos := GearPosition{
+					SymbolIndex: j,
+					Line:        i,
+				}
+				lineToNumbersMap[gearPos] = []Number{}
+			}
+		}
+	}
+	return lineToNumbersMap
+}
+
+func extractValidPartNumbers(input [][]string, numberMap map[int][]Number, gearPosMap map[GearPosition][]Number) []Number {
 	var validParts []Number
 	for i := 0; i < len(input); i++ {
 		if i == 0 {
@@ -82,12 +103,26 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 				if input[i][start] != "." {
 					_, err := strconv.Atoi(input[i][start])
 					if err != nil {
+						if input[i][start] == "*" {
+							gearPos := GearPosition{
+								SymbolIndex: start,
+								Line:        i,
+							}
+							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
+						}
 						validParts = append(validParts, number)
 					}
 				}
 				if input[i][end] != "." {
 					_, err := strconv.Atoi(input[i][end])
 					if err != nil {
+						if input[i][end] == "*" {
+							gearPos := GearPosition{
+								SymbolIndex: end,
+								Line:        i,
+							}
+							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
+						}
 						validParts = append(validParts, number)
 					}
 				}
@@ -100,6 +135,13 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 					if input[i+1][first] != "." {
 						_, err := strconv.Atoi(input[i+1][first])
 						if err != nil {
+							if input[i+1][first] == "*" {
+								gearPos := GearPosition{
+									SymbolIndex: first,
+									Line:        i + 1,
+								}
+								gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
+							}
 							validParts = append(validParts, number)
 						}
 					}
@@ -121,12 +163,26 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 				if input[i][start] != "." {
 					_, err := strconv.Atoi(input[i][start])
 					if err != nil {
+						if input[i][start] == "*" {
+							gearPos := GearPosition{
+								SymbolIndex: start,
+								Line:        i,
+							}
+							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
+						}
 						validParts = append(validParts, number)
 					}
 				}
 				if input[i][end] != "." {
 					_, err := strconv.Atoi(input[i][end])
 					if err != nil {
+						if input[i][end] == "*" {
+							gearPos := GearPosition{
+								SymbolIndex: end,
+								Line:        i,
+							}
+							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
+						}
 						validParts = append(validParts, number)
 					}
 				}
@@ -135,6 +191,13 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 					if input[i-1][first] != "." {
 						_, err := strconv.Atoi(input[i-1][first])
 						if err != nil {
+							if input[i-1][first] == "*" {
+								gearPos := GearPosition{
+									SymbolIndex: first,
+									Line:        i - 1,
+								}
+								gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
+							}
 							validParts = append(validParts, number)
 						}
 					}
@@ -156,6 +219,13 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 			if input[i][start] != "." {
 				_, err := strconv.Atoi(input[i][start])
 				if err != nil {
+					if input[i][start] == "*" {
+						gearPos := GearPosition{
+							SymbolIndex: start,
+							Line:        i,
+						}
+						gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
+					}
 					validParts = append(validParts, number)
 					continue
 				}
@@ -163,6 +233,13 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 			if input[i][end] != "." {
 				_, err := strconv.Atoi(input[i][end])
 				if err != nil {
+					if input[i][end] == "*" {
+						gearPos := GearPosition{
+							SymbolIndex: end,
+							Line:        i,
+						}
+						gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
+					}
 					validParts = append(validParts, number)
 					continue
 				}
@@ -172,6 +249,13 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 				if input[i-1][first] != "." {
 					_, err := strconv.Atoi(input[i-1][first])
 					if err != nil {
+						if input[i-1][first] == "*" {
+							gearPos := GearPosition{
+								SymbolIndex: first,
+								Line:        i - 1,
+							}
+							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
+						}
 						validParts = append(validParts, number)
 						continue
 					}
@@ -179,6 +263,13 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 				if input[i+1][first] != "." {
 					_, err := strconv.Atoi(input[i+1][first])
 					if err != nil {
+						if input[i+1][first] == "*" {
+							gearPos := GearPosition{
+								SymbolIndex: first,
+								Line:        i + 1,
+							}
+							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
+						}
 						validParts = append(validParts, number)
 						continue
 					}
@@ -197,7 +288,17 @@ func sumValidPartNumbers(sum int, numbers []Number) int {
 	return newSum
 }
 
-func Solve(pathToInput string) int {
+func sumGearRatios(gearPosMap map[GearPosition][]Number) int {
+	gearRatioSum := 0
+	for _, v := range gearPosMap {
+		if len(v) == 2 {
+			gearRatioSum += v[0].Value * v[1].Value
+		}
+	}
+	return gearRatioSum
+}
+
+func Solve(pathToInput string) (int, int) {
 	f, err := os.Open(pathToInput)
 	if err != nil {
 		log.Fatal(err)
@@ -218,12 +319,15 @@ func Solve(pathToInput string) int {
 	}
 
 	numberMap := mapNumbersToLines(input)
+	gearPosMap := mapGearPositions(input)
 
 	var validParts []Number
-	validParts = extractValidPartNumbers(input, numberMap)
+	validParts = extractValidPartNumbers(input, numberMap, gearPosMap)
+
+	gearRatioSum := sumGearRatios(gearPosMap)
 
 	answer := 0
 	answer = sumValidPartNumbers(answer, validParts)
-	fmt.Println("Part 1: ", answer)
-	return answer
+	fmt.Println("Part 1:", answer, "Part 2:", gearRatioSum)
+	return answer, gearRatioSum
 }

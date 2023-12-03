@@ -136,7 +136,7 @@ func TestMapNumbersToLines(t *testing.T) {
 func TestExtractValidPartsFromTheFirstLine(t *testing.T) {
 	input := [][]string{
 		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
-		{".", ".", ".", "*", ".", ".", ".", ".", ".", "."},
+		{".", ".", ".", "+", ".", ".", ".", ".", ".", "."},
 	}
 	numberMap := map[int][]Number{
 		0: {
@@ -162,7 +162,8 @@ func TestExtractValidPartsFromTheFirstLine(t *testing.T) {
 		},
 	}
 
-	got := extractValidPartNumbers(input, numberMap)
+	var gearPosMap map[GearPosition][]Number
+	got := extractValidPartNumbers(input, numberMap, gearPosMap)
 
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
@@ -171,7 +172,7 @@ func TestExtractValidPartsFromTheFirstLine(t *testing.T) {
 
 func TestExtractValidPartsFromTheLastLine(t *testing.T) {
 	input := [][]string{
-		{".", ".", ".", "*", ".", ".", ".", ".", ".", "."},
+		{".", ".", ".", "+", ".", ".", ".", ".", ".", "."},
 		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
 	}
 	numberMap := map[int][]Number{
@@ -198,7 +199,8 @@ func TestExtractValidPartsFromTheLastLine(t *testing.T) {
 		},
 	}
 
-	got := extractValidPartNumbers(input, numberMap)
+	var gearPosMap map[GearPosition][]Number
+	got := extractValidPartNumbers(input, numberMap, gearPosMap)
 
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
@@ -207,7 +209,7 @@ func TestExtractValidPartsFromTheLastLine(t *testing.T) {
 
 func TestExtractValidPartsFromSingleLineWithSymbols(t *testing.T) {
 	input := [][]string{
-		{"6", "1", "7", "*", ".", ".", ".", ".", ".", "."},
+		{"6", "1", "7", "+", ".", ".", ".", ".", ".", "."},
 	}
 	numberMap := map[int][]Number{
 		0: {
@@ -227,7 +229,9 @@ func TestExtractValidPartsFromSingleLineWithSymbols(t *testing.T) {
 		},
 	}
 
-	got := extractValidPartNumbers(input, numberMap)
+	var gearPosMap map[GearPosition][]Number
+
+	got := extractValidPartNumbers(input, numberMap, gearPosMap)
 
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
@@ -237,7 +241,7 @@ func TestExtractValidPartsFromSingleLineWithSymbols(t *testing.T) {
 func TestExtractValidPartsFromTheLineWithPreviousAndNext(t *testing.T) {
 	input := [][]string{
 		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
-		{".", ".", ".", "*", ".", ".", ".", ".", ".", "."},
+		{".", ".", ".", "+", ".", ".", ".", ".", ".", "."},
 		{".", ".", "3", "5", ".", ".", "6", "3", "3", "."},
 		{".", ".", ".", ".", ".", ".", "#", ".", ".", "."},
 	}
@@ -287,7 +291,8 @@ func TestExtractValidPartsFromTheLineWithPreviousAndNext(t *testing.T) {
 		},
 	}
 
-	got := extractValidPartNumbers(input, numberMap)
+	var gearPosMap map[GearPosition][]Number
+	got := extractValidPartNumbers(input, numberMap, gearPosMap)
 
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
@@ -322,10 +327,84 @@ func TestSumValidPartNumbers(t *testing.T) {
 	}
 }
 
-func TestExampleSolve(t *testing.T) {
+func TestExampleSolvePart1(t *testing.T) {
 	filePath := "resources/input_test.txt"
 	want := 4361
-	got := Solve(filePath)
+	got, _ := Solve(filePath)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
+// Part 2 (flipping elves are going to be the death of me)
+
+func TestExtractGearPositions(t *testing.T) {
+	input := [][]string{
+		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
+		{".", ".", ".", "*", ".", ".", ".", ".", ".", "."},
+		{".", ".", "3", "5", ".", ".", "6", "3", "3", "."},
+		{".", ".", ".", ".", ".", ".", "#", ".", ".", "."},
+	}
+
+	want := map[GearPosition][]Number{
+		{Line: 1, SymbolIndex: 3}: {},
+	}
+
+	got := mapGearPositions(input)
+
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
+func TestExtractValidPartNumbersPopulatesGearPosMapValues(t *testing.T) {
+	input := [][]string{
+		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
+		{".", ".", ".", "*", ".", ".", ".", ".", ".", "."},
+		{".", ".", "3", "5", ".", ".", "6", "3", "3", "."},
+		{".", ".", ".", ".", ".", ".", "#", ".", ".", "."},
+	}
+
+	want := map[GearPosition][]Number{
+		{Line: 1, SymbolIndex: 3}: {{StartIndex: 0, EndIndex: 2, Value: 467}, {StartIndex: 2, EndIndex: 3, Value: 35}},
+	}
+
+	numberMap := mapNumbersToLines(input)
+	got := mapGearPositions(input)
+
+	extractValidPartNumbers(input, numberMap, got)
+
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
+func TestSumGearRatios(t *testing.T) {
+	input := [][]string{
+		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
+		{".", ".", ".", "*", ".", ".", ".", ".", ".", "."},
+		{".", ".", "3", "5", ".", ".", "6", "3", "3", "."},
+		{".", ".", ".", ".", ".", ".", "#", ".", ".", "."},
+	}
+
+	want := 16345
+
+	numberMap := mapNumbersToLines(input)
+	gearPosMap := mapGearPositions(input)
+
+	extractValidPartNumbers(input, numberMap, gearPosMap)
+
+	got := sumGearRatios(gearPosMap)
+
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
+func TestExampleSolvePart2(t *testing.T) {
+	filePath := "resources/input_test.txt"
+	want := 467835
+	_, got := Solve(filePath)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
