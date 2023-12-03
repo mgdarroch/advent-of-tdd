@@ -1,6 +1,10 @@
 package day3
 
 import (
+	"bufio"
+	"fmt"
+	"log"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -58,11 +62,59 @@ func mapNumbersToLines(input [][]string) map[int][]Number {
 }
 
 func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Number {
-	return []Number{
-		{
-			StartIndex: 0,
-			EndIndex:   2,
-			Value:      467,
-		},
+	var validParts []Number
+	for i := 0; i < len(input); i++ {
+		if i == 0 {
+			// first line, only check the next line
+			for _, number := range numberMap[i] {
+				start := number.StartIndex - 1
+				end := number.EndIndex + 1
+				if start < 0 {
+					start = start + 1
+				}
+				if end >= len(input[i+1]) {
+					end = end - 1
+				}
+				for first := start; first <= end; first++ {
+					if input[i+1][first] != "." {
+						_, err := strconv.Atoi(input[i+1][first])
+						if err != nil {
+							validParts = append(validParts, number)
+						}
+					}
+				}
+			}
+		}
+		if i == len(input)-1 {
+			// last line, only check the previous line
+			continue
+		}
+		continue
+		// check both previous and next line
 	}
+	return validParts
+}
+
+func Solve(pathToInput string) {
+	f, err := os.Open(pathToInput)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+
+		}
+	}(f)
+
+	var input [][]string
+
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		line := scanner.Text()
+		input = loadInput(input, line)
+	}
+
+	numberMap := mapNumbersToLines(input)
+	fmt.Println(numberMap[1])
 }
