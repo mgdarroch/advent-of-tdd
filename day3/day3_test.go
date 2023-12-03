@@ -184,11 +184,62 @@ func TestExtractValidPartsFromTheLastLine(t *testing.T) {
 	}
 }
 
-// Basic plan, read the input into a slice of slices
-// iterate over each character and for each number, check the adjacent spaces until a symbol is found
-// if a symbol is found, concatenate the number characters and convert to an integer
-// sum them together
+func TestExtractValidPartsFromTheLineWithPreviousAndNext(t *testing.T) {
+	input := [][]string{
+		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
+		{".", ".", ".", "*", ".", ".", ".", ".", ".", "."},
+		{".", ".", "3", "5", ".", ".", "6", "3", "3", "."},
+		{".", ".", ".", ".", ".", ".", "#", ".", ".", "."},
+	}
+	numberMap := map[int][]Number{
+		0: {
+			{
+				StartIndex: 0,
+				EndIndex:   2,
+				Value:      467,
+			},
+			{
+				StartIndex: 5,
+				EndIndex:   7,
+				Value:      114,
+			},
+		},
+		1: {},
+		2: {
+			{
+				StartIndex: 2,
+				EndIndex:   3,
+				Value:      35,
+			},
+			{
+				StartIndex: 6,
+				EndIndex:   8,
+				Value:      633,
+			},
+		},
+	}
 
-// adjacent spaces will be i+1 and i-1 on the current slice, as well as i-1, i and i+1 on the above and below slices
+	want := []Number{
+		{
+			StartIndex: 0,
+			EndIndex:   2,
+			Value:      467,
+		},
+		{
+			StartIndex: 2,
+			EndIndex:   3,
+			Value:      35,
+		},
+		{
+			StartIndex: 6,
+			EndIndex:   8,
+			Value:      633,
+		},
+	}
 
-// should we grab the
+	got := extractValidPartNumbers(input, numberMap)
+
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
