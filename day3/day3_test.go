@@ -243,3 +243,31 @@ func TestExtractValidPartsFromTheLineWithPreviousAndNext(t *testing.T) {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
+
+func TestSumValidPartNumbers(t *testing.T) {
+	input := []Number{
+		{
+			StartIndex: 0,
+			EndIndex:   2,
+			Value:      467,
+		},
+		{
+			StartIndex: 2,
+			EndIndex:   3,
+			Value:      35,
+		},
+		{
+			StartIndex: 6,
+			EndIndex:   8,
+			Value:      633,
+		},
+	}
+
+	want := 1135
+	got := 0
+	got = sumValidPartNumbers(got, input)
+
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
