@@ -46,6 +46,48 @@ func TestExtractNumberStructs(t *testing.T) {
 	}
 }
 
+func TestExtractNumberStructsTwoDigitNumbers(t *testing.T) {
+	line := []string{"4", "6", ".", ".", "1", "1", "4", ".", "."}
+	want := []Number{
+		{
+			StartIndex: 0,
+			EndIndex:   1,
+			Value:      46,
+		},
+		{
+			StartIndex: 4,
+			EndIndex:   6,
+			Value:      114,
+		},
+	}
+	got := extractNumbers(line)
+
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
+func TestExtractNumberStructsSingleDigitNumbers(t *testing.T) {
+	line := []string{"4", ".", ".", "1", "1", "4", ".", "."}
+	want := []Number{
+		{
+			StartIndex: 0,
+			EndIndex:   0,
+			Value:      4,
+		},
+		{
+			StartIndex: 3,
+			EndIndex:   5,
+			Value:      114,
+		},
+	}
+	got := extractNumbers(line)
+
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
 // Basic plan, read the input into a slice of slices
 // iterate over each character and for each number, check the adjacent spaces until a symbol is found
 // if a symbol is found, concatenate the number characters and convert to an integer
