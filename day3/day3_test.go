@@ -2,6 +2,7 @@ package day3
 
 import (
 	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 	"testing"
 )
 
@@ -294,7 +295,7 @@ func TestExtractValidPartsFromTheLineWithPreviousAndNext(t *testing.T) {
 	var gearPosMap map[GearPosition][]Number
 	got := extractValidPartNumbers(input, numberMap, gearPosMap)
 
-	if !cmp.Equal(want, got) {
+	if !cmp.Equal(want, got, cmpopts.SortSlices(lessNumber)) {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
@@ -374,7 +375,7 @@ func TestExtractValidPartNumbersPopulatesGearPosMapValues(t *testing.T) {
 
 	extractValidPartNumbers(input, numberMap, got)
 
-	if !cmp.Equal(want, got) {
+	if !cmp.Equal(want, got, cmpopts.SortSlices(lessNumber)) {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
@@ -396,7 +397,7 @@ func TestSumGearRatios(t *testing.T) {
 
 	got := sumGearRatios(gearPosMap)
 
-	if !cmp.Equal(want, got) {
+	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
 }

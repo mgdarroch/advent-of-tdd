@@ -19,6 +19,10 @@ type Number struct {
 	Value      int
 }
 
+func lessNumber(num1, num2 Number) bool {
+	return num1.EndIndex < num2.EndIndex
+}
+
 func loadInput(input [][]string, line string) [][]string {
 	splitString := strings.Split(line, "")
 	input = append(input, splitString)
@@ -86,196 +90,50 @@ func mapGearPositions(input [][]string) map[GearPosition][]Number {
 
 func extractValidPartNumbers(input [][]string, numberMap map[int][]Number, gearPosMap map[GearPosition][]Number) []Number {
 	var validParts []Number
-	for i := 0; i < len(input); i++ {
-		if i == 0 {
-			// first line, only check the next line and current line
-			for _, number := range numberMap[i] {
-				start := number.StartIndex - 1
-				end := number.EndIndex + 1
-				if start < 0 {
-					start = start + 1
-				}
-				if end >= len(input[i]) {
-					end = end - 1
-				}
 
-				if input[i][start] != "." {
-					_, err := strconv.Atoi(input[i][start])
-					if err != nil {
-						if input[i][start] == "*" {
-							gearPos := GearPosition{
-								SymbolIndex: start,
-								Line:        i,
-							}
-							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
-						}
-						validParts = append(validParts, number)
-					}
-				}
-				if input[i][end] != "." {
-					_, err := strconv.Atoi(input[i][end])
-					if err != nil {
-						if input[i][end] == "*" {
-							gearPos := GearPosition{
-								SymbolIndex: end,
-								Line:        i,
-							}
-							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
-						}
-						validParts = append(validParts, number)
-					}
-				}
-
-				if i+1 == len(input) {
-					continue
-				}
-
-				for first := start; first <= end; first++ {
-					if input[i+1][first] != "." {
-						_, err := strconv.Atoi(input[i+1][first])
-						if err != nil {
-							if input[i+1][first] == "*" {
-								gearPos := GearPosition{
-									SymbolIndex: first,
-									Line:        i + 1,
-								}
-								gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
-							}
-							validParts = append(validParts, number)
-						}
-					}
-				}
-			}
-			continue
+	checkAndAppend := func(index int, line int, number Number) {
+		if index < 0 || index >= len(input[line]) {
+			return
 		}
-		if i == len(input)-1 {
-			for _, number := range numberMap[i] {
-				start := number.StartIndex - 1
-				end := number.EndIndex + 1
-				if start < 0 {
-					start = start + 1
-				}
-				if end >= len(input[i]) {
-					end = end - 1
-				}
-
-				if input[i][start] != "." {
-					_, err := strconv.Atoi(input[i][start])
-					if err != nil {
-						if input[i][start] == "*" {
-							gearPos := GearPosition{
-								SymbolIndex: start,
-								Line:        i,
-							}
-							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
-						}
-						validParts = append(validParts, number)
+		symbol := input[line][index]
+		if symbol != "." {
+			_, err := strconv.Atoi(symbol)
+			if err != nil {
+				if symbol == "*" {
+					gearPos := GearPosition{
+						SymbolIndex: index,
+						Line:        line,
 					}
+					gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
 				}
-				if input[i][end] != "." {
-					_, err := strconv.Atoi(input[i][end])
-					if err != nil {
-						if input[i][end] == "*" {
-							gearPos := GearPosition{
-								SymbolIndex: end,
-								Line:        i,
-							}
-							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
-						}
-						validParts = append(validParts, number)
-					}
-				}
-
-				for first := start; first <= end; first++ {
-					if input[i-1][first] != "." {
-						_, err := strconv.Atoi(input[i-1][first])
-						if err != nil {
-							if input[i-1][first] == "*" {
-								gearPos := GearPosition{
-									SymbolIndex: first,
-									Line:        i - 1,
-								}
-								gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
-							}
-							validParts = append(validParts, number)
-						}
-					}
-				}
+				validParts = append(validParts, number)
 			}
-			continue
 		}
-		// check both previous and next line
-		for _, number := range numberMap[i] {
-			start := number.StartIndex - 1
-			end := number.EndIndex + 1
-			if start < 0 {
-				start = start + 1
-			}
-			if end >= len(input[i]) {
-				end = end - 1
-			}
+	}
 
-			if input[i][start] != "." {
-				_, err := strconv.Atoi(input[i][start])
-				if err != nil {
-					if input[i][start] == "*" {
-						gearPos := GearPosition{
-							SymbolIndex: start,
-							Line:        i,
-						}
-						gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
-					}
-					validParts = append(validParts, number)
-					continue
-				}
-			}
-			if input[i][end] != "." {
-				_, err := strconv.Atoi(input[i][end])
-				if err != nil {
-					if input[i][end] == "*" {
-						gearPos := GearPosition{
-							SymbolIndex: end,
-							Line:        i,
-						}
-						gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
-					}
-					validParts = append(validParts, number)
-					continue
-				}
-			}
+	for i, numbers := range numberMap {
+		for _, number := range numbers {
+			start := max(number.StartIndex-1, 0)
+			end := min(number.EndIndex+1, len(input[i])-1)
 
-			for first := start; first <= end; first++ {
-				if input[i-1][first] != "." {
-					_, err := strconv.Atoi(input[i-1][first])
-					if err != nil {
-						if input[i-1][first] == "*" {
-							gearPos := GearPosition{
-								SymbolIndex: first,
-								Line:        i - 1,
-							}
-							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
-						}
-						validParts = append(validParts, number)
-						continue
-					}
+			// Check the current line
+			checkAndAppend(start, i, number)
+			checkAndAppend(end, i, number)
+
+			// Check the previous and next line if applicable
+			if i > 0 {
+				for j := start; j <= end; j++ {
+					checkAndAppend(j, i-1, number)
 				}
-				if input[i+1][first] != "." {
-					_, err := strconv.Atoi(input[i+1][first])
-					if err != nil {
-						if input[i+1][first] == "*" {
-							gearPos := GearPosition{
-								SymbolIndex: first,
-								Line:        i + 1,
-							}
-							gearPosMap[gearPos] = append(gearPosMap[gearPos], number)
-						}
-						validParts = append(validParts, number)
-						continue
-					}
+			}
+			if i < len(input)-1 {
+				for j := start; j <= end; j++ {
+					checkAndAppend(j, i+1, number)
 				}
 			}
 		}
 	}
+
 	return validParts
 }
 
