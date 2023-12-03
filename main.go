@@ -11,8 +11,8 @@ import (
 )
 
 func main() {
-	//solutionDay1()
-	//solutionDay2()
+	solutionDay1()
+	solutionDay2()
 	solutionDay3()
 }
 
@@ -58,10 +58,11 @@ func solutionDay2() {
 		line := scanner.Text()
 		idSum, powerSum = day2.Solve(line, idSum, powerSum)
 	}
-	fmt.Printf("Day 2 => Part 1: %d, Part 2: %d", idSum, powerSum)
+	fmt.Printf("Day 2 => Part 1: %d, Part 2: %d\n", idSum, powerSum)
 }
 
 func solutionDay3() {
 	filePath := "day3/resources/input.txt"
-	day3.Solve(filePath)
+	part1, part2 := day3.Solve(filePath)
+	fmt.Printf("Day 3 => Part 1: %d Part 2: %d\n", part1, part2)
 }

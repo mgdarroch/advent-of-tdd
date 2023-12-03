@@ -2,7 +2,6 @@ package day3
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -328,6 +327,5 @@ func Solve(pathToInput string) (int, int) {
 
 	answer := 0
 	answer = sumValidPartNumbers(answer, validParts)
-	fmt.Println("Part 1:", answer, "Part 2:", gearRatioSum)
 	return answer, gearRatioSum
 }
