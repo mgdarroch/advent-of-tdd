@@ -1,6 +1,7 @@
 package day3
 
 import (
+	"strconv"
 	"strings"
 )
 
@@ -18,15 +19,32 @@ func loadInput(input [][]string, line string) [][]string {
 
 func extractNumbers(input []string) []Number {
 	var numbers []Number
-	numbers = append(numbers, Number{
-		StartIndex: 0,
-		EndIndex:   2,
-		Value:      467,
-	})
-	numbers = append(numbers, Number{
-		StartIndex: 5,
-		EndIndex:   7,
-		Value:      114,
-	})
+	for i := 0; i < len(input); i++ {
+		number := Number{
+			StartIndex: 0,
+			EndIndex:   0,
+			Value:      0,
+		}
+		numString := ""
+		_, err := strconv.Atoi(input[i])
+		if err != nil {
+			continue
+		}
+		number.StartIndex = i
+		numString += input[i]
+		for j := 1; j < 3; j++ {
+			if i+j > len(input) {
+				break
+			}
+			_, err := strconv.Atoi(input[i+j])
+			if err == nil {
+				numString += input[i+j]
+				number.EndIndex = i + j
+			}
+		}
+		number.Value, _ = strconv.Atoi(numString)
+		i = i + len(numString)
+		numbers = append(numbers, number)
+	}
 	return numbers
 }
