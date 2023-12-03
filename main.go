@@ -3,6 +3,7 @@ package main
 import (
 	"aoctdd/day1"
 	"aoctdd/day2"
+	"aoctdd/day3"
 	"bufio"
 	"fmt"
 	"log"
@@ -10,8 +11,9 @@ import (
 )
 
 func main() {
-	solutionDay1()
-	solutionDay2()
+	//solutionDay1()
+	//solutionDay2()
+	solutionDay3()
 }
 
 func solutionDay1() {
@@ -57,4 +59,9 @@ func solutionDay2() {
 		idSum, powerSum = day2.Solve(line, idSum, powerSum)
 	}
 	fmt.Printf("Day 2 => Part 1: %d, Part 2: %d", idSum, powerSum)
+}
+
+func solutionDay3() {
+	filePath := "day3/resources/input.txt"
+	day3.Solve(filePath)
 }

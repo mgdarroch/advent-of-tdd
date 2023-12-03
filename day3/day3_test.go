@@ -88,6 +88,27 @@ func TestExtractNumberStructsSingleDigitNumbers(t *testing.T) {
 	}
 }
 
+func TestExtractNumberStructsSingleDigitNumbersAlternative(t *testing.T) {
+	line := []string{".", "4", ".", "1", "1", "4", ".", "."}
+	want := []Number{
+		{
+			StartIndex: 1,
+			EndIndex:   1,
+			Value:      4,
+		},
+		{
+			StartIndex: 3,
+			EndIndex:   5,
+			Value:      114,
+		},
+	}
+	got := extractNumbersFromLine(line)
+
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
 func TestMapNumbersToLines(t *testing.T) {
 	input := [][]string{
 		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},

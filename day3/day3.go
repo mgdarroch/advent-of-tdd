@@ -35,13 +35,16 @@ func extractNumbersFromLine(input []string) []Number {
 			continue
 		}
 		number.StartIndex = i
+		number.EndIndex = i
 		numString += input[i]
 		for j := 1; j < 3; j++ {
 			if i+j > len(input) {
 				break
 			}
 			_, err := strconv.Atoi(input[i+j])
-			if err == nil {
+			if err != nil {
+				break
+			} else {
 				numString += input[i+j]
 				number.EndIndex = i + j
 			}
@@ -80,15 +83,17 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 					_, err := strconv.Atoi(input[i][start])
 					if err != nil {
 						validParts = append(validParts, number)
-						continue
 					}
 				}
 				if input[i][end] != "." {
 					_, err := strconv.Atoi(input[i][end])
 					if err != nil {
 						validParts = append(validParts, number)
-						continue
 					}
+				}
+
+				if i+1 == len(input) {
+					continue
 				}
 
 				for first := start; first <= end; first++ {
@@ -103,7 +108,6 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 			continue
 		}
 		if i == len(input)-1 {
-			// last line, only check the previous line
 			for _, number := range numberMap[i] {
 				start := number.StartIndex - 1
 				end := number.EndIndex + 1
@@ -118,14 +122,12 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 					_, err := strconv.Atoi(input[i][start])
 					if err != nil {
 						validParts = append(validParts, number)
-						continue
 					}
 				}
 				if input[i][end] != "." {
 					_, err := strconv.Atoi(input[i][end])
 					if err != nil {
 						validParts = append(validParts, number)
-						continue
 					}
 				}
 
