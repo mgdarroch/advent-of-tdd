@@ -2,6 +2,7 @@ package day3
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -64,16 +65,32 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 	var validParts []Number
 	for i := 0; i < len(input); i++ {
 		if i == 0 {
-			// first line, only check the next line
+			// first line, only check the next line and current line
 			for _, number := range numberMap[i] {
 				start := number.StartIndex - 1
 				end := number.EndIndex + 1
 				if start < 0 {
 					start = start + 1
 				}
-				if end >= len(input[i+1]) {
+				if end >= len(input[i]) {
 					end = end - 1
 				}
+
+				if input[i][start] != "." {
+					_, err := strconv.Atoi(input[i][start])
+					if err != nil {
+						validParts = append(validParts, number)
+						continue
+					}
+				}
+				if input[i][end] != "." {
+					_, err := strconv.Atoi(input[i][end])
+					if err != nil {
+						validParts = append(validParts, number)
+						continue
+					}
+				}
+
 				for first := start; first <= end; first++ {
 					if input[i+1][first] != "." {
 						_, err := strconv.Atoi(input[i+1][first])
@@ -93,9 +110,25 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 				if start < 0 {
 					start = start + 1
 				}
-				if end >= len(input[i-1]) {
+				if end >= len(input[i]) {
 					end = end - 1
 				}
+
+				if input[i][start] != "." {
+					_, err := strconv.Atoi(input[i][start])
+					if err != nil {
+						validParts = append(validParts, number)
+						continue
+					}
+				}
+				if input[i][end] != "." {
+					_, err := strconv.Atoi(input[i][end])
+					if err != nil {
+						validParts = append(validParts, number)
+						continue
+					}
+				}
+
 				for first := start; first <= end; first++ {
 					if input[i-1][first] != "." {
 						_, err := strconv.Atoi(input[i-1][first])
@@ -114,20 +147,38 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 			if start < 0 {
 				start = start + 1
 			}
-			if end >= len(input[i-1]) {
+			if end >= len(input[i]) {
 				end = end - 1
 			}
+
+			if input[i][start] != "." {
+				_, err := strconv.Atoi(input[i][start])
+				if err != nil {
+					validParts = append(validParts, number)
+					continue
+				}
+			}
+			if input[i][end] != "." {
+				_, err := strconv.Atoi(input[i][end])
+				if err != nil {
+					validParts = append(validParts, number)
+					continue
+				}
+			}
+
 			for first := start; first <= end; first++ {
 				if input[i-1][first] != "." {
 					_, err := strconv.Atoi(input[i-1][first])
 					if err != nil {
 						validParts = append(validParts, number)
+						continue
 					}
 				}
 				if input[i+1][first] != "." {
 					_, err := strconv.Atoi(input[i+1][first])
 					if err != nil {
 						validParts = append(validParts, number)
+						continue
 					}
 				}
 			}
@@ -144,7 +195,7 @@ func sumValidPartNumbers(sum int, numbers []Number) int {
 	return newSum
 }
 
-func Solve(pathToInput string) {
+func Solve(pathToInput string) int {
 	f, err := os.Open(pathToInput)
 	if err != nil {
 		log.Fatal(err)
@@ -166,5 +217,11 @@ func Solve(pathToInput string) {
 
 	numberMap := mapNumbersToLines(input)
 
-	extractValidPartNumbers(input, numberMap)
+	var validParts []Number
+	validParts = extractValidPartNumbers(input, numberMap)
+
+	answer := 0
+	answer = sumValidPartNumbers(answer, validParts)
+	fmt.Println("Part 1: ", answer)
+	return answer
 }

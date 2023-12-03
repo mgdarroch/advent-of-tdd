@@ -184,6 +184,35 @@ func TestExtractValidPartsFromTheLastLine(t *testing.T) {
 	}
 }
 
+func TestExtractValidPartsFromSingleLineWithSymbols(t *testing.T) {
+	input := [][]string{
+		{"6", "1", "7", "*", ".", ".", ".", ".", ".", "."},
+	}
+	numberMap := map[int][]Number{
+		0: {
+			{
+				StartIndex: 0,
+				EndIndex:   2,
+				Value:      617,
+			},
+		},
+	}
+
+	want := []Number{
+		{
+			StartIndex: 0,
+			EndIndex:   2,
+			Value:      617,
+		},
+	}
+
+	got := extractValidPartNumbers(input, numberMap)
+
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
 func TestExtractValidPartsFromTheLineWithPreviousAndNext(t *testing.T) {
 	input := [][]string{
 		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
@@ -267,6 +296,15 @@ func TestSumValidPartNumbers(t *testing.T) {
 	got := 0
 	got = sumValidPartNumbers(got, input)
 
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
+func TestExampleSolve(t *testing.T) {
+	filePath := "resources/input_test.txt"
+	want := 4361
+	got := Solve(filePath)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
