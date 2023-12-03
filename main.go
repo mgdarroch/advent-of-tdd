@@ -3,6 +3,7 @@ package main
 import (
 	"aoctdd/day1"
 	"aoctdd/day2"
+	"aoctdd/day3"
 	"bufio"
 	"fmt"
 	"log"
@@ -12,6 +13,7 @@ import (
 func main() {
 	solutionDay1()
 	solutionDay2()
+	solutionDay3()
 }
 
 func solutionDay1() {
@@ -19,7 +21,13 @@ func solutionDay1() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer f.Close()
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+
+		}
+	}(f)
+
 	scanner := bufio.NewScanner(f)
 	part1Answer := 0
 	part2Answer := 0
@@ -28,7 +36,7 @@ func solutionDay1() {
 		part1Answer = day1.Solve(part1Answer, line, false)
 		part2Answer = day1.Solve(part2Answer, line, true)
 	}
-	fmt.Printf("Part 1: %d Part 2: %d\n", part1Answer, part2Answer)
+	fmt.Printf("Day 1 => Part 1: %d Part 2: %d\n", part1Answer, part2Answer)
 }
 
 func solutionDay2() {
@@ -36,7 +44,13 @@ func solutionDay2() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer f.Close()
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+
+		}
+	}(f)
+
 	scanner := bufio.NewScanner(f)
 	idSum := 0
 	powerSum := 0
@@ -44,5 +58,11 @@ func solutionDay2() {
 		line := scanner.Text()
 		idSum, powerSum = day2.Solve(line, idSum, powerSum)
 	}
-	fmt.Printf("ID: %d, Power: %d", idSum, powerSum)
+	fmt.Printf("Day 2 => Part 1: %d, Part 2: %d\n", idSum, powerSum)
+}
+
+func solutionDay3() {
+	filePath := "day3/resources/input.txt"
+	part1, part2 := day3.Solve(filePath)
+	fmt.Printf("Day 3 => Part 1: %d Part 2: %d\n", part1, part2)
 }
