@@ -1,9 +1,9 @@
 package day3
 
+import "strings"
+
 func loadInput(input [][]string, line string) [][]string {
-	newInput := [][]string{
-		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
-		{".", ".", ".", "*", ".", ".", ".", ".", ".", "."},
-	}
-	return newInput
+	splitString := strings.Split(line, "")
+	input = append(input, splitString)
+	return input
 }
