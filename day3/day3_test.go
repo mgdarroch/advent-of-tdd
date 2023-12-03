@@ -148,6 +148,42 @@ func TestExtractValidPartsFromTheFirstLine(t *testing.T) {
 	}
 }
 
+func TestExtractValidPartsFromTheLastLine(t *testing.T) {
+	input := [][]string{
+		{".", ".", ".", "*", ".", ".", ".", ".", ".", "."},
+		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
+	}
+	numberMap := map[int][]Number{
+		0: {},
+		1: {
+			{
+				StartIndex: 0,
+				EndIndex:   2,
+				Value:      467,
+			},
+			{
+				StartIndex: 5,
+				EndIndex:   7,
+				Value:      114,
+			},
+		},
+	}
+
+	want := []Number{
+		{
+			StartIndex: 0,
+			EndIndex:   2,
+			Value:      467,
+		},
+	}
+
+	got := extractValidPartNumbers(input, numberMap)
+
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
 // Basic plan, read the input into a slice of slices
 // iterate over each character and for each number, check the adjacent spaces until a symbol is found
 // if a symbol is found, concatenate the number characters and convert to an integer
