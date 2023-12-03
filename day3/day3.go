@@ -84,6 +84,7 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 					}
 				}
 			}
+			continue
 		}
 		if i == len(input)-1 {
 			// last line, only check the previous line
@@ -105,9 +106,33 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 					}
 				}
 			}
+			continue
 		}
-		continue
 		// check both previous and next line
+		for _, number := range numberMap[i] {
+			start := number.StartIndex - 1
+			end := number.EndIndex + 1
+			if start < 0 {
+				start = start + 1
+			}
+			if end >= len(input[i-1]) {
+				end = end - 1
+			}
+			for first := start; first <= end; first++ {
+				if input[i-1][first] != "." {
+					_, err := strconv.Atoi(input[i-1][first])
+					if err != nil {
+						validParts = append(validParts, number)
+					}
+				}
+				if input[i+1][first] != "." {
+					_, err := strconv.Atoi(input[i+1][first])
+					if err != nil {
+						validParts = append(validParts, number)
+					}
+				}
+			}
+		}
 	}
 	return validParts
 }
