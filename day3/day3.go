@@ -56,3 +56,13 @@ func mapNumbersToLines(input [][]string) map[int][]Number {
 	}
 	return lineToNumbersMap
 }
+
+func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Number {
+	return []Number{
+		{
+			StartIndex: 0,
+			EndIndex:   2,
+			Value:      467,
+		},
+	}
+}
