@@ -39,7 +39,7 @@ func TestExtractNumberStructs(t *testing.T) {
 			Value:      114,
 		},
 	}
-	got := extractNumbers(line)
+	got := extractNumbersFromLine(line)
 
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
@@ -60,7 +60,7 @@ func TestExtractNumberStructsTwoDigitNumbers(t *testing.T) {
 			Value:      114,
 		},
 	}
-	got := extractNumbers(line)
+	got := extractNumbersFromLine(line)
 
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
@@ -81,7 +81,7 @@ func TestExtractNumberStructsSingleDigitNumbers(t *testing.T) {
 			Value:      114,
 		},
 	}
-	got := extractNumbers(line)
+	got := extractNumbersFromLine(line)
 
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)

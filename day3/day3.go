@@ -17,7 +17,7 @@ func loadInput(input [][]string, line string) [][]string {
 	return input
 }
 
-func extractNumbers(input []string) []Number {
+func extractNumbersFromLine(input []string) []Number {
 	var numbers []Number
 	for i := 0; i < len(input); i++ {
 		number := Number{
