@@ -2,7 +2,6 @@ package day3
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -137,6 +136,14 @@ func extractValidPartNumbers(input [][]string, numberMap map[int][]Number) []Num
 	return validParts
 }
 
+func sumValidPartNumbers(sum int, numbers []Number) int {
+	newSum := sum
+	for _, number := range numbers {
+		newSum += number.Value
+	}
+	return newSum
+}
+
 func Solve(pathToInput string) {
 	f, err := os.Open(pathToInput)
 	if err != nil {
@@ -158,5 +165,6 @@ func Solve(pathToInput string) {
 	}
 
 	numberMap := mapNumbersToLines(input)
-	fmt.Println(numberMap[1])
+
+	extractValidPartNumbers(input, numberMap)
 }
