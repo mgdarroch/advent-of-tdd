@@ -88,6 +88,30 @@ func TestExtractNumberStructsSingleDigitNumbers(t *testing.T) {
 	}
 }
 
+func TestMapNumbersToLines(t *testing.T) {
+	input := [][]string{
+		{"4", "6", "7", ".", ".", "1", "1", "4", ".", "."},
+	}
+	want := map[int][]Number{
+		0: {
+			{
+				StartIndex: 0,
+				EndIndex:   2,
+				Value:      467,
+			},
+			{
+				StartIndex: 5,
+				EndIndex:   7,
+				Value:      114,
+			},
+		},
+	}
+	got := mapNumbersToLines(input)
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
 // Basic plan, read the input into a slice of slices
 // iterate over each character and for each number, check the adjacent spaces until a symbol is found
 // if a symbol is found, concatenate the number characters and convert to an integer
