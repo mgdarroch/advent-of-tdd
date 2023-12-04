@@ -49,7 +49,7 @@ func TestGetCardValueFromNumberMap(t *testing.T) {
 func TestSolveWithExampleInput(t *testing.T) {
 	filePath := "resources/input_test.txt"
 	want := 13
-	got := Solve(filePath)
+	got, _ := Solve(filePath)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
@@ -106,13 +106,22 @@ func TestPopulateCardMapWithDuplicatesAndTotal(t *testing.T) {
 
 	wantTotal := 3
 
-	gotCardMap, gotTotal := populateCardMapWithDuplicatesAndTotal(cardMap)
+	gotTotal := populateCardMapWithDuplicatesAndTotal(cardMap)
 
-	if !cmp.Equal(wantCardMap, gotCardMap) {
-		t.Errorf("want %q, got %q", wantCardMap, gotCardMap)
+	if !cmp.Equal(wantCardMap, cardMap) {
+		t.Errorf("want %q, got %q", wantCardMap, cardMap)
 	}
 
 	if wantTotal != gotTotal {
 		t.Errorf("want %d, got %d", wantTotal, gotTotal)
+	}
+}
+
+func TestSolvePart2WithExampleInput(t *testing.T) {
+	filePath := "resources/input_test.txt"
+	want := 30
+	_, got := Solve(filePath)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
 	}
 }

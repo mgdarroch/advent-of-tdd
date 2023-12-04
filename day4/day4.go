@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -57,28 +58,33 @@ func buildCardFromLine(cardNumber int, matches int) Card {
 	}
 }
 
-func populateCardMapWithDuplicatesAndTotal(cardMap map[int][]Card) (map[int][]Card, int) {
-	return map[int][]Card{
-		1: {
-			{
-				CardNumber:     1,
-				MatchedNumbers: 4,
-			},
-		},
-		2: {
-			{
-				CardNumber:     2,
-				MatchedNumbers: 2,
-			},
-			{
-				CardNumber:     2,
-				MatchedNumbers: 2,
-			},
-		},
-	}, 3
+func populateCardMapWithDuplicatesAndTotal(cardMap map[int][]Card) int {
+	total := 0
+	var keys []int
+	for k := range cardMap {
+		keys = append(keys, k)
+	}
+	sort.Ints(keys)
+	for _, key := range keys {
+		cardArr := cardMap[key]
+		total += len(cardArr)
+		if cardArr[0].CardNumber < len(keys) {
+			for _, card := range cardArr {
+				if card.MatchedNumbers > 0 {
+					for i := card.CardNumber + 1; i <= card.CardNumber+card.MatchedNumbers; i++ {
+						if i > len(keys) {
+							break
+						}
+						cardMap[i] = append(cardMap[i], cardMap[i][0])
+					}
+				}
+			}
+		}
+	}
+	return total
 }
 
-func Solve(inputFile string) int {
+func Solve(inputFile string) (int, int) {
 	f, err := os.Open(inputFile)
 	if err != nil {
 		log.Fatal(err)
@@ -93,10 +99,19 @@ func Solve(inputFile string) int {
 	scanner := bufio.NewScanner(f)
 
 	sum := 0
+	cardNumber := 1
+	cardMap := map[int][]Card{}
+	totalCards := 0
 
 	for scanner.Scan() {
+		matches := 0
 		line := scanner.Text()
-		sum, _ = getCardValue(buildNumberMap(line), sum, 0)
+		sum, matches = getCardValue(buildNumberMap(line), sum, matches)
+		cardMap[cardNumber] = append(cardMap[cardNumber], buildCardFromLine(cardNumber, matches))
+		cardNumber++
 	}
-	return sum
+
+	totalCards = populateCardMapWithDuplicatesAndTotal(cardMap)
+
+	return sum, totalCards
 }
