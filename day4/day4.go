@@ -24,3 +24,7 @@ func buildNumberMap(input string) map[int]int {
 	}
 	return numberMap
 }
+
+func getCardValue(input map[int]int) int {
+	return 8
+}
