@@ -1,6 +1,9 @@
 package day4
 
 import (
+	"bufio"
+	"log"
+	"os"
 	"strconv"
 )
 
@@ -40,5 +43,24 @@ func getCardValue(input map[int]int) int {
 }
 
 func Solve(inputFile string) int {
-	return 13
+	f, err := os.Open(inputFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+
+		}
+	}(f)
+
+	scanner := bufio.NewScanner(f)
+
+	sum := 0
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		sum += getCardValue(buildNumberMap(line))
+	}
+	return sum
 }
