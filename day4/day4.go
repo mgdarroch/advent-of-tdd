@@ -26,5 +26,15 @@ func buildNumberMap(input string) map[int]int {
 }
 
 func getCardValue(input map[int]int) int {
-	return 8
+	count := 0
+	for _, v := range input {
+		if v == 2 && count == 0 {
+			count += 1
+			continue
+		}
+		if v == 2 {
+			count = count * 2
+		}
+	}
+	return count
 }
