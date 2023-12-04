@@ -12,9 +12,9 @@ import (
 )
 
 func main() {
-	//solutionDay1()
-	//solutionDay2()
-	//solutionDay3()
+	solutionDay1()
+	solutionDay2()
+	solutionDay3()
 	solutionDay4()
 }
 
