@@ -44,3 +44,12 @@ func TestGetCardValueFromNumberMap(t *testing.T) {
 		t.Errorf("want %d, got %d", want, got)
 	}
 }
+
+func TestSolveWithExampleInput(t *testing.T) {
+	filePath := "resources/input_test.txt"
+	want := 13
+	got := Solve(filePath)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
