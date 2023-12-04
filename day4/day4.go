@@ -9,7 +9,7 @@ import (
 
 type Card struct {
 	CardNumber     int
-	WinningNumbers int
+	MatchedNumbers int
 }
 
 func buildNumberMap(input string) map[int]int {
@@ -33,25 +33,49 @@ func buildNumberMap(input string) map[int]int {
 	return numberMap
 }
 
-func getCardValue(input map[int]int) int {
+func getCardValue(input map[int]int, sum int, matchedNumbers int) (int, int) {
 	count := 0
+	matches := 0
 	for _, v := range input {
 		if v == 2 && count == 0 {
 			count += 1
+			matches++
 			continue
 		}
 		if v == 2 {
 			count = count * 2
+			matches++
 		}
 	}
-	return count
+	return sum + count, matches
 }
 
-func buildCardFromLine(input string) Card {
+func buildCardFromLine(cardNumber int, matches int) Card {
 	return Card{
-		CardNumber:     1,
-		WinningNumbers: 4,
+		CardNumber:     cardNumber,
+		MatchedNumbers: matches,
 	}
+}
+
+func populateCardMapWithDuplicatesAndTotal(cardMap map[int][]Card) (map[int][]Card, int) {
+	return map[int][]Card{
+		1: {
+			{
+				CardNumber:     1,
+				MatchedNumbers: 4,
+			},
+		},
+		2: {
+			{
+				CardNumber:     2,
+				MatchedNumbers: 2,
+			},
+			{
+				CardNumber:     2,
+				MatchedNumbers: 2,
+			},
+		},
+	}, 3
 }
 
 func Solve(inputFile string) int {
@@ -72,7 +96,7 @@ func Solve(inputFile string) int {
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		sum += getCardValue(buildNumberMap(line))
+		sum, _ = getCardValue(buildNumberMap(line), sum, 0)
 	}
 	return sum
 }
