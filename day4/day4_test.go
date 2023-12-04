@@ -108,7 +108,7 @@ func TestPopulateCardMapWithDuplicatesAndTotal(t *testing.T) {
 
 	gotCardMap, gotTotal := populateCardMapWithDuplicatesAndTotal(cardMap)
 
-	if cmp.Equal(wantCardMap, gotCardMap) {
+	if !cmp.Equal(wantCardMap, gotCardMap) {
 		t.Errorf("want %q, got %q", wantCardMap, gotCardMap)
 	}
 
