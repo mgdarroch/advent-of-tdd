@@ -24,3 +24,23 @@ func TestBuildNumberMapFromLine(t *testing.T) {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
+
+func TestGetCardValueFromNumberMap(t *testing.T) {
+	numberMap := map[int]int{
+		41: 1,
+		48: 2,
+		83: 2,
+		86: 2,
+		17: 2,
+		6:  1,
+		31: 1,
+		9:  1,
+		53: 1,
+	}
+	want := 8
+	got := getCardValue(numberMap)
+
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
