@@ -20,7 +20,7 @@ func TestBuildNumberMapFromLine(t *testing.T) {
 	}
 	got := buildNumberMap(line)
 
-	if cmp.Equal(want, got) {
+	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
