@@ -4,6 +4,7 @@ import (
 	"aoctdd/day1"
 	"aoctdd/day2"
 	"aoctdd/day3"
+	"aoctdd/day4"
 	"bufio"
 	"fmt"
 	"log"
@@ -11,9 +12,10 @@ import (
 )
 
 func main() {
-	solutionDay1()
-	solutionDay2()
-	solutionDay3()
+	//solutionDay1()
+	//solutionDay2()
+	//solutionDay3()
+	solutionDay4()
 }
 
 func solutionDay1() {
@@ -65,4 +67,10 @@ func solutionDay3() {
 	filePath := "day3/resources/input.txt"
 	part1, part2 := day3.Solve(filePath)
 	fmt.Printf("Day 3 => Part 1: %d Part 2: %d\n", part1, part2)
+}
+
+func solutionDay4() {
+	filePath := "day4/resources/input.txt"
+	part1 := day4.Solve(filePath)
+	fmt.Printf("Day 4 => Part 1: %d", part1)
 }
