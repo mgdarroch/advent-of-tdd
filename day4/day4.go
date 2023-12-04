@@ -7,6 +7,11 @@ import (
 	"strconv"
 )
 
+type Card struct {
+	CardNumber     int
+	WinningNumbers int
+}
+
 func buildNumberMap(input string) map[int]int {
 	numberMap := map[int]int{}
 	trimStr := input[8:]
@@ -40,6 +45,13 @@ func getCardValue(input map[int]int) int {
 		}
 	}
 	return count
+}
+
+func buildCardFromLine(input string) Card {
+	return Card{
+		CardNumber:     1,
+		WinningNumbers: 4,
+	}
 }
 
 func Solve(inputFile string) int {
