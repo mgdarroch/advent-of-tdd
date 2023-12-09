@@ -3,6 +3,7 @@ package day5
 import (
 	"bufio"
 	"log"
+	"math"
 	"os"
 	"sort"
 	"strconv"
@@ -66,12 +67,12 @@ func parseMap(lines [][]string) Map {
 			res.Name = line[0]
 			continue
 		}
-		sourceRange, _ := strconv.Atoi(line[0])
-		destRange, _ := strconv.Atoi(line[1])
+		destRange, _ := strconv.Atoi(line[0])
+		sourceRange, _ := strconv.Atoi(line[1])
 		rangeLength, _ := strconv.Atoi(line[2])
 		ranges = append(ranges, Range{
 			From:      sourceRange,
-			To:        sourceRange + rangeLength,
+			To:        sourceRange + rangeLength - 1,
 			Transform: destRange - sourceRange,
 		})
 	}
@@ -101,4 +102,40 @@ func extractMaps(lines [][]string) []Map {
 	}
 
 	return res
+}
+
+func SolvePart1(input string) int {
+	loadedInput := loadInput(input)
+	seeds := parseSeeds(loadedInput[0])
+	maps := extractMaps(loadedInput)
+
+	lowest := math.MaxInt
+	for _, v := range seeds {
+		for _, m := range maps {
+			if dst, contains := m.get(v); contains {
+				v = dst
+			}
+		}
+		lowest = min(lowest, v)
+	}
+
+	return lowest
+}
+
+func (m Map) get(v int) (int, bool) {
+	l := 0
+	r := len(m.Ranges) - 1
+	for l <= r {
+		mid := l + (r-l)/2
+		rng := m.Ranges[mid]
+		if v >= rng.From && v <= rng.To {
+			return v + rng.Transform, true
+		}
+		if v < rng.From {
+			r = mid - 1
+		} else {
+			l = mid + 1
+		}
+	}
+	return 0, false
 }

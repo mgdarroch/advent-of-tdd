@@ -102,8 +102,8 @@ func TestParseMapExtractsAMapStructFromLine(t *testing.T) {
 	want := Map{
 		Name: "seed-to-soil",
 		Ranges: []Range{
-			{50, 52, 48},
-			{52, 100, -2},
+			{50, 97, 2},
+			{98, 99, -48},
 		},
 	}
 	stringInput := loadInput(input)
@@ -120,54 +120,54 @@ func TestExtractMapsIntoAMapArray(t *testing.T) {
 		{
 			Name: "seed-to-soil",
 			Ranges: []Range{
-				{50, 52, 48},
-				{52, 100, -2},
+				{50, 97, 2},
+				{98, 99, -48},
 			},
 		},
 		{
 			Name: "soil-to-fertilizer",
 			Ranges: []Range{
-				{0, 37, 15},
-				{37, 39, 15},
-				{39, 54, -39},
+				{0, 14, 39},
+				{15, 51, -15},
+				{52, 53, -15},
 			},
 		},
 		{
 			Name: "fertilizer-to-water",
 			Ranges: []Range{
-				{0, 42, 11},
-				{42, 49, -42},
-				{49, 57, 4},
-				{57, 61, -50},
+				{0, 6, 42},
+				{7, 10, 50},
+				{11, 52, -11},
+				{53, 60, -4},
 			},
 		},
 		{
 			Name: "water-to-light",
 			Ranges: []Range{
-				{18, 88, 7},
-				{88, 95, -70},
+				{18, 24, 70},
+				{25, 94, -7},
 			},
 		},
 		{
 			Name: "light-to-temperature",
 			Ranges: []Range{
-				{45, 68, 32},
-				{68, 81, -4},
-				{81, 100, -36},
+				{45, 63, 36},
+				{64, 76, 4},
+				{77, 99, -32},
 			},
 		},
 		{
 			Name: "temperature-to-humidity",
 			Ranges: []Range{
-				{0, 1, 69},
-				{1, 70, -1},
+				{0, 68, 1},
+				{69, 69, -69},
 			},
 		},
 		{
 			Name: "humidity-to-location",
 			Ranges: []Range{
-				{56, 60, 37},
-				{60, 97, -4},
+				{56, 92, 4},
+				{93, 96, -37},
 			},
 		},
 	}
@@ -175,5 +175,14 @@ func TestExtractMapsIntoAMapArray(t *testing.T) {
 	got := extractMaps(stringInput)
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
+func TestSolvePart1(t *testing.T) {
+	input := "resources/input_test.txt"
+	want := 35
+	got := SolvePart1(input)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
 	}
 }
