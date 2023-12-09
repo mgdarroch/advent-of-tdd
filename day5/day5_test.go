@@ -181,7 +181,7 @@ func TestExtractMapsIntoAMapArray(t *testing.T) {
 func TestSolvePart1(t *testing.T) {
 	input := "resources/input_test.txt"
 	want := 35
-	got := SolvePart1(input)
+	got, _ := Solve(input)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}

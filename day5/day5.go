@@ -104,7 +104,7 @@ func extractMaps(lines [][]string) []Map {
 	return res
 }
 
-func SolvePart1(input string) int {
+func Solve(input string) (int, int) {
 	loadedInput := loadInput(input)
 	seeds := parseSeeds(loadedInput[0])
 	maps := extractMaps(loadedInput)
@@ -119,7 +119,7 @@ func SolvePart1(input string) int {
 		lowest = min(lowest, v)
 	}
 
-	return lowest
+	return lowest, 0
 }
 
 func (m Map) get(v int) (int, bool) {
