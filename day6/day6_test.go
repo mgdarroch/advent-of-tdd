@@ -26,3 +26,15 @@ func TestLoadInputIntoTimeDistancePairs(t *testing.T) {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
+
+func TestCheckWinScenarios(t *testing.T) {
+	input := Race{
+		Time:     7,
+		Distance: 9,
+	}
+	want := 4
+	got := checkWinScenarios(input)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
