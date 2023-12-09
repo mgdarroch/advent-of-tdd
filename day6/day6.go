@@ -46,3 +46,7 @@ func loadInput(input string) []Race {
 	}
 	return races
 }
+
+func checkWinScenarios(race Race) int {
+	return 4
+}
