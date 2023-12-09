@@ -1,6 +1,7 @@
 package day5
 
 import (
+	"fmt"
 	"github.com/google/go-cmp/cmp"
 	"testing"
 )
@@ -71,11 +72,12 @@ seed  soil
 
 func TestLoadInputExtractsAllTheInputIntoAStringArray(t *testing.T) {
 	input := "resources/input_test.txt"
-	want := 33
+	want := 26
 	got := loadInput(input)
 	if want != len(got) {
 		t.Errorf("want %d, got %d", want, len(got))
 	}
+	fmt.Println(got)
 }
 
 func TestParseSeedsExtractsTheSeedsIntoAnIntArray(t *testing.T) {
@@ -90,8 +92,25 @@ func TestParseSeedsExtractsTheSeedsIntoAnIntArray(t *testing.T) {
 func TestParseSeedsUsingLoadInput(t *testing.T) {
 	input := "resources/input_test.txt"
 	want := []int{79, 14, 55, 13}
-	parseSeedsInput := loadInput(input)
-	got := parseSeeds(parseSeedsInput[0])
+	stringInput := loadInput(input)
+	got := parseSeeds(stringInput[0])
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
+func TestParseMapExtractsAMapStructFromLine(t *testing.T) {
+	input := "resources/input_test.txt"
+	want := Map{
+		Name: "seed-to-soil",
+		Ranges: []Range{
+			{50, 98, 2},
+			{52, 50, 48},
+		},
+	}
+	stringInput := loadInput(input)
+	lines := stringInput[1:3]
+	got := parseMap(lines)
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
