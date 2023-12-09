@@ -1,7 +1,6 @@
 package day5
 
 import (
-	"fmt"
 	"github.com/google/go-cmp/cmp"
 	"testing"
 )
@@ -77,7 +76,6 @@ func TestLoadInputExtractsAllTheInputIntoAStringArray(t *testing.T) {
 	if want != len(got) {
 		t.Errorf("want %d, got %d", want, len(got))
 	}
-	fmt.Println(got)
 }
 
 func TestParseSeedsExtractsTheSeedsIntoAnIntArray(t *testing.T) {
@@ -109,7 +107,7 @@ func TestParseMapExtractsAMapStructFromLine(t *testing.T) {
 		},
 	}
 	stringInput := loadInput(input)
-	lines := stringInput[1:3]
+	lines := stringInput[1:4]
 	got := parseMap(lines)
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)

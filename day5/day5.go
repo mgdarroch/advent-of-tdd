@@ -55,11 +55,24 @@ func parseSeeds(input []string) []int {
 }
 
 func parseMap(lines [][]string) Map {
-	return Map{
-		Name: "seed-to-soil",
-		Ranges: []Range{
-			{50, 98, 2},
-			{52, 50, 48},
-		},
+	res := Map{
+		Name:   "",
+		Ranges: []Range{},
 	}
+	for i, line := range lines {
+		if i == 0 {
+			res.Name = line[0]
+			continue
+		}
+		sourceRange, _ := strconv.Atoi(line[0])
+		destRange, _ := strconv.Atoi(line[1])
+		transform, _ := strconv.Atoi(line[2])
+		res.Ranges = append(res.Ranges, Range{
+			From:      sourceRange,
+			To:        destRange,
+			Transform: transform,
+		})
+	}
+
+	return res
 }
