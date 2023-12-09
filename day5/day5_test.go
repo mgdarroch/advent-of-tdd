@@ -135,25 +135,25 @@ func TestExtractMapsIntoAMapArray(t *testing.T) {
 		{
 			Name: "fertilizer-to-water",
 			Ranges: []Range{
-				{49, 57, 4},
 				{0, 42, 11},
 				{42, 49, -42},
+				{49, 57, 4},
 				{57, 61, -50},
 			},
 		},
 		{
 			Name: "water-to-light",
 			Ranges: []Range{
-				{88, 95, -70},
 				{18, 88, 7},
+				{88, 95, -70},
 			},
 		},
 		{
 			Name: "light-to-temperature",
 			Ranges: []Range{
 				{45, 68, 32},
-				{81, 100, -36},
 				{68, 81, -4},
+				{81, 100, -36},
 			},
 		},
 		{
@@ -166,8 +166,8 @@ func TestExtractMapsIntoAMapArray(t *testing.T) {
 		{
 			Name: "humidity-to-location",
 			Ranges: []Range{
-				{60, 97, -4},
 				{56, 60, 37},
+				{60, 97, -4},
 			},
 		},
 	}

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -59,6 +60,7 @@ func parseMap(lines [][]string) Map {
 		Name:   "",
 		Ranges: []Range{},
 	}
+	var ranges []Range
 	for i, line := range lines {
 		if i == 0 {
 			res.Name = line[0]
@@ -67,13 +69,16 @@ func parseMap(lines [][]string) Map {
 		sourceRange, _ := strconv.Atoi(line[0])
 		destRange, _ := strconv.Atoi(line[1])
 		rangeLength, _ := strconv.Atoi(line[2])
-		res.Ranges = append(res.Ranges, Range{
+		ranges = append(ranges, Range{
 			From:      sourceRange,
 			To:        sourceRange + rangeLength,
 			Transform: destRange - sourceRange,
 		})
 	}
-
+	sort.Slice(ranges, func(c1, c2 int) bool {
+		return ranges[c1].From < ranges[c2].From
+	})
+	res.Ranges = ranges
 	return res
 }
 
