@@ -100,7 +100,6 @@ func TestParseSeedsUsingLoadInput(t *testing.T) {
 func TestParseMapExtractsAMapStructFromLine(t *testing.T) {
 	input := "resources/input_test.txt"
 	want := Map{
-		Name: "seed-to-soil",
 		Ranges: []Range{
 			{50, 97, 2},
 			{98, 99, -48},
@@ -108,7 +107,7 @@ func TestParseMapExtractsAMapStructFromLine(t *testing.T) {
 	}
 	stringInput := loadInput(input)
 	lines := stringInput[1:4]
-	got := parseMap(lines)
+	got := parseMap(lines, extractRangesPart1)
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
@@ -118,14 +117,12 @@ func TestExtractMapsIntoAMapArray(t *testing.T) {
 	input := "resources/input_test.txt"
 	want := []Map{
 		{
-			Name: "seed-to-soil",
 			Ranges: []Range{
 				{50, 97, 2},
 				{98, 99, -48},
 			},
 		},
 		{
-			Name: "soil-to-fertilizer",
 			Ranges: []Range{
 				{0, 14, 39},
 				{15, 51, -15},
@@ -133,7 +130,6 @@ func TestExtractMapsIntoAMapArray(t *testing.T) {
 			},
 		},
 		{
-			Name: "fertilizer-to-water",
 			Ranges: []Range{
 				{0, 6, 42},
 				{7, 10, 50},
@@ -142,14 +138,12 @@ func TestExtractMapsIntoAMapArray(t *testing.T) {
 			},
 		},
 		{
-			Name: "water-to-light",
 			Ranges: []Range{
 				{18, 24, 70},
 				{25, 94, -7},
 			},
 		},
 		{
-			Name: "light-to-temperature",
 			Ranges: []Range{
 				{45, 63, 36},
 				{64, 76, 4},
@@ -157,14 +151,12 @@ func TestExtractMapsIntoAMapArray(t *testing.T) {
 			},
 		},
 		{
-			Name: "temperature-to-humidity",
 			Ranges: []Range{
 				{0, 68, 1},
 				{69, 69, -69},
 			},
 		},
 		{
-			Name: "humidity-to-location",
 			Ranges: []Range{
 				{56, 92, 4},
 				{93, 96, -37},
@@ -172,7 +164,7 @@ func TestExtractMapsIntoAMapArray(t *testing.T) {
 		},
 	}
 	stringInput := loadInput(input)
-	got := extractMaps(stringInput)
+	got := extractMaps(stringInput, extractRangesPart1)
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
@@ -182,6 +174,24 @@ func TestSolvePart1(t *testing.T) {
 	input := "resources/input_test.txt"
 	want := 35
 	got, _ := Solve(input)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
+func TestParseSeedsWithRange(t *testing.T) {
+	input := []string{"seeds:", "79", "14", "55", "13"}
+	want := [][2]int{{55, 13}, {79, 14}}
+	got := parseSeedsWithRange(input)
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
+func TestSolvePart2(t *testing.T) {
+	input := "resources/input_test.txt"
+	want := 46
+	_, got := Solve(input)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
