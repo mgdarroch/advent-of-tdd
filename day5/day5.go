@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"strconv"
+	"strings"
 )
 
 func loadInput(input string) []string {
@@ -28,5 +30,12 @@ func loadInput(input string) []string {
 }
 
 func parseSeeds(input string) []int {
-	return []int{79, 14, 55, 13}
+	seeds := input[7:]
+	seedsSplit := strings.Split(seeds, " ")
+	var intSeeds []int
+	for _, seed := range seedsSplit {
+		num, _ := strconv.Atoi(seed)
+		intSeeds = append(intSeeds, num)
+	}
+	return intSeeds
 }
