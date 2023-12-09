@@ -76,3 +76,61 @@ func parseMap(lines [][]string) Map {
 
 	return res
 }
+
+func extractMaps(lines [][]string) []Map {
+	return []Map{
+		{
+			Name: "seed-to-soil",
+			Ranges: []Range{
+				{50, 98, 2},
+				{52, 50, 48},
+			},
+		},
+		{
+			Name: "soil-to-fertilizer",
+			Ranges: []Range{
+				{0, 15, 37},
+				{37, 52, 2},
+				{39, 0, 15},
+			},
+		},
+		{
+			Name: "fertilizer-to-water",
+			Ranges: []Range{
+				{49, 53, 8},
+				{0, 11, 42},
+				{42, 0, 7},
+				{57, 7, 4},
+			},
+		},
+		{
+			Name: "water-to-light",
+			Ranges: []Range{
+				{88, 18, 7},
+				{18, 25, 70},
+			},
+		},
+		{
+			Name: "light-to-temperature",
+			Ranges: []Range{
+				{45, 77, 23},
+				{81, 45, 19},
+				{68, 64, 13},
+			},
+		},
+		{
+			Name: "temperature-to-humidity",
+			Ranges: []Range{
+				{0, 69, 1},
+				{1, 0, 69},
+			},
+		},
+		{
+			Name: "humidity-to-location",
+			Ranges: []Range{
+				{60, 56, 37},
+				{56, 93, 4},
+			},
+		},
+	}
+}
