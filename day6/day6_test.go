@@ -9,16 +9,16 @@ func TestLoadInputIntoTimeDistancePairs(t *testing.T) {
 	input := "resources/input_test.txt"
 	want := []Race{
 		{
-			Time: 7,
-			Distance: 9
+			Time:     7,
+			Distance: 9,
 		},
 		{
-			Time: 15,
-			Distance: 40
+			Time:     15,
+			Distance: 40,
 		},
 		{
-			Time: 30,
-			Distance: 200
+			Time:     30,
+			Distance: 200,
 		},
 	}
 	got := loadInput(input)
