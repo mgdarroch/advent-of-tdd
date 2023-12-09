@@ -8,7 +8,13 @@ import (
 	"strings"
 )
 
-func loadInput(input string) []string {
+type Range struct {
+	source      int
+	destination int
+	transform   int
+}
+
+func loadInput(input string) [][]string {
 	f, err := os.Open(input)
 	if err != nil {
 		log.Fatal(err)
@@ -20,20 +26,20 @@ func loadInput(input string) []string {
 		}
 	}(f)
 
-	var res []string
+	var res [][]string
 	scanner := bufio.NewScanner(f)
 
 	for scanner.Scan() {
-		res = append(res, scanner.Text())
+		str := scanner.Text()
+		res = append(res, strings.Split(str, " "))
 	}
 	return res
 }
 
-func parseSeeds(input string) []int {
-	seeds := input[7:]
-	seedsSplit := strings.Split(seeds, " ")
+func parseSeeds(input []string) []int {
+	seeds := input[1:]
 	var intSeeds []int
-	for _, seed := range seedsSplit {
+	for _, seed := range seeds {
 		num, _ := strconv.Atoi(seed)
 		intSeeds = append(intSeeds, num)
 	}

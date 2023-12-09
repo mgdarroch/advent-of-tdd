@@ -79,9 +79,19 @@ func TestLoadInputExtractsAllTheInputIntoAStringArray(t *testing.T) {
 }
 
 func TestParseSeedsExtractsTheSeedsIntoAnIntArray(t *testing.T) {
-	input := "seeds: 79 14 55 13"
+	input := []string{"seeds:", "79", "14", "55", "13"}
 	want := []int{79, 14, 55, 13}
 	got := parseSeeds(input)
+	if !cmp.Equal(want, got) {
+		t.Errorf("want %q, got %q", want, got)
+	}
+}
+
+func TestParseSeedsUsingLoadInput(t *testing.T) {
+	input := "resources/input_test.txt"
+	want := []int{79, 14, 55, 13}
+	parseSeedsInput := loadInput(input)
+	got := parseSeeds(parseSeedsInput[0])
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %q, got %q", want, got)
 	}
