@@ -2,6 +2,7 @@ package day5
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -66,11 +67,12 @@ func parseMap(lines [][]string) Map {
 		}
 		sourceRange, _ := strconv.Atoi(line[0])
 		destRange, _ := strconv.Atoi(line[1])
-		transform, _ := strconv.Atoi(line[2])
+		rangeLength, _ := strconv.Atoi(line[2])
+		fmt.Printf("{%d, %d, %d},\n", sourceRange, sourceRange+rangeLength, destRange-sourceRange)
 		res.Ranges = append(res.Ranges, Range{
 			From:      sourceRange,
-			To:        destRange,
-			Transform: transform,
+			To:        sourceRange + rangeLength,
+			Transform: destRange - sourceRange,
 		})
 	}
 
