@@ -48,5 +48,12 @@ func loadInput(input string) []Race {
 }
 
 func checkWinScenarios(race Race) int {
-	return 4
+	winScenarios := 0
+	for i := 1; i < race.Time; i++ {
+		distance := i * (race.Time - i)
+		if distance >= race.Distance {
+			winScenarios++
+		}
+	}
+	return winScenarios
 }
