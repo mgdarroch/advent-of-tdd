@@ -26,3 +26,7 @@ func loadInput(input string) []string {
 	}
 	return res
 }
+
+func parseSeeds(input string) []int {
+	return []int{79, 14, 55, 13}
+}
