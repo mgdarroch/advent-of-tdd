@@ -3,7 +3,6 @@ package day7
 import (
 	"bufio"
 	"log"
-	"math"
 	"os"
 	"sort"
 	"strconv"
@@ -11,9 +10,11 @@ import (
 )
 
 type Hand struct {
-	CardString string
-	CardMap    map[Card]int
-	Bid        int
+	CardString   string
+	CardMap      map[Card]int
+	Bid          int
+	Type         string
+	HandStrength int
 }
 
 type Card struct {
@@ -71,6 +72,7 @@ func loadInput(input string) []Hand {
 			CardString: splitStr[0],
 			CardMap:    cardMap,
 			Bid:        num,
+			Type:       "",
 		})
 	}
 	return res
@@ -78,12 +80,15 @@ func loadInput(input string) []Hand {
 
 func sortHands(hands []Hand) {
 	sort.Slice(hands, func(i, j int) bool {
-		return calculateStrength(hands[i]) < calculateStrength(hands[j])
+		if calculateStrength(&hands[i]) < calculateStrength(&hands[j]) {
+			return true
+		}
+		return false
 	})
 }
 
-func getHandStrength(hand Hand) int {
-	handStrength := 0
+func getHandStrength(hand *Hand) int {
+	var handStrength int
 	maxCardCount := 0
 	for _, v := range hand.CardMap {
 		if v > maxCardCount {
@@ -92,35 +97,50 @@ func getHandStrength(hand Hand) int {
 	}
 	switch maxCardCount {
 	case 5:
-		handStrength = 7000000
+		hand.Type = "Five of a Kind"
+		handStrength = 7
 	case 4:
-		handStrength = 6000000
+		hand.Type = "Four of a Kind"
+		handStrength = 6
 	case 3:
 		if len(hand.CardMap) == 2 {
-			handStrength = 5000000
+			hand.Type = "Full House"
+			handStrength = 5
 		} else {
-			handStrength = 4000000
+			hand.Type = "Three of a Kind"
+			handStrength = 4
 		}
 	case 2:
 		if len(hand.CardMap) == 3 {
-			handStrength = 3000000
+			hand.Type = "Two Pair"
+			handStrength = 3
 		} else {
-			handStrength = 2000000
+			hand.Type = "One Pair"
+			handStrength = 2
 		}
 	case 1:
-		handStrength = 1000000
+		hand.Type = "High Card"
+		handStrength = 1
 	}
 	return handStrength
 }
 
-func calculateStrength(hand Hand) int {
+func calculateStrength(hand *Hand) int {
 	typeStrength := getHandStrength(hand)
+	typeStr := strconv.Itoa(typeStrength)
 	cardValueMap := getCardValueMap()
-	handStrength := typeStrength
-	for i, card := range strings.Split(hand.CardString, "") {
-		handStrength += cardValueMap[card] * int(math.Pow(10, float64(4-i)))
+	cards := strings.Split(hand.CardString, "")
+	for i := 0; i < len(hand.CardString); i++ {
+		if cardValueMap[cards[i]] < 10 {
+			typeStr += "0"
+			typeStr += strconv.Itoa(cardValueMap[cards[i]])
+		} else {
+			typeStr += strconv.Itoa(cardValueMap[cards[i]])
+		}
 	}
-	return handStrength
+	res, _ := strconv.Atoi(typeStr)
+	hand.HandStrength = res
+	return res
 }
 
 func Solve(filePath string) int {
