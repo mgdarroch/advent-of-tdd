@@ -39,3 +39,7 @@ func loadInput(input string) []Round {
 	}
 	return res
 }
+
+func getHandStrength(round Round) int {
+	return 440
+}
