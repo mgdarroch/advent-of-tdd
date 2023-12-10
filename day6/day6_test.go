@@ -42,7 +42,16 @@ func TestCheckWinScenarios(t *testing.T) {
 func TestSolvePart1(t *testing.T) {
 	filePath := "resources/input_test.txt"
 	want := 288
-	got := Solve(filePath)
+	got, _ := Solve(filePath)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
+func TestSolvePart2(t *testing.T) {
+	filePath := "resources/input_test.txt"
+	want := 71503
+	_, got := Solve(filePath)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
