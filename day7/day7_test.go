@@ -9,24 +9,45 @@ func TestLoadInputToRoundStruct(t *testing.T) {
 	input := "resources/input_test.txt"
 	want := []Hand{
 		{
-			Cards: "32T3K",
-			Bid:   765,
+			CardMap: map[string]int{
+				"3": 2,
+				"2": 1,
+				"T": 1,
+				"K": 1,
+			},
+			Bid: 765,
 		},
 		{
-			Cards: "T55J5",
-			Bid:   684,
+			CardMap: map[string]int{
+				"T": 1,
+				"5": 3,
+				"J": 1,
+			},
+			Bid: 684,
 		},
 		{
-			Cards: "KK677",
-			Bid:   28,
+			CardMap: map[string]int{
+				"K": 2,
+				"7": 2,
+				"6": 1,
+			},
+			Bid: 28,
 		},
 		{
-			Cards: "KTJJT",
-			Bid:   220,
+			CardMap: map[string]int{
+				"K": 1,
+				"T": 2,
+				"J": 2,
+			},
+			Bid: 220,
 		},
 		{
-			Cards: "QQQJA",
-			Bid:   483,
+			CardMap: map[string]int{
+				"Q": 3,
+				"J": 1,
+				"A": 1,
+			},
+			Bid: 483,
 		},
 	}
 	got := loadInput(input)
@@ -37,8 +58,12 @@ func TestLoadInputToRoundStruct(t *testing.T) {
 
 func TestGetHandStrength(t *testing.T) {
 	input := Hand{
-		Cards: "KTJJT",
-		Bid:   220,
+		CardMap: map[string]int{
+			"K": 1,
+			"T": 2,
+			"J": 2,
+		},
+		Bid: 220,
 	}
 	want := 440
 	got := getHandStrength(input)

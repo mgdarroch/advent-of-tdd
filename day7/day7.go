@@ -10,8 +10,8 @@ import (
 )
 
 type Hand struct {
-	Cards string
-	Bid   int
+	CardMap map[string]int
+	Bid     int
 }
 
 type Card struct {
@@ -35,12 +35,16 @@ func loadInput(input string) []Hand {
 
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
+		cardMap := map[string]int{}
 		str := scanner.Text()
 		splitStr := strings.Split(str, " ")
 		num, _ := strconv.Atoi(splitStr[1])
+		for _, v := range splitStr[0] {
+			cardMap[string(v)] = cardMap[string(v)] + 1
+		}
 		res = append(res, Hand{
-			Cards: splitStr[0],
-			Bid:   num,
+			CardMap: cardMap,
+			Bid:     num,
 		})
 	}
 	return res
@@ -49,9 +53,8 @@ func loadInput(input string) []Hand {
 func getHandStrength(hand Hand) int {
 	handStrength := 0
 	handMap := map[string]int{}
-	for _, v := range hand.Cards {
-		handMap[string(v)] = handMap[string(v)] + 1
-	}
+	fmt.Println(handMap)
+	fmt.Println(hand.CardMap)
 	fmt.Println(handStrength)
 	return 440
 }
