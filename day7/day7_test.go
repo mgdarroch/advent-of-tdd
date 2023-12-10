@@ -57,7 +57,7 @@ func TestLoadInputToHandStructArray(t *testing.T) {
 	}
 	got := loadInput(input)
 	if !cmp.Equal(want, got) {
-		t.Errorf("want %q, got %q", want, got)
+		t.Errorf("want %v, got %v", want, got)
 	}
 }
 
@@ -71,7 +71,8 @@ func TestSortHandsIntoRank(t *testing.T) {
 				Card{CardSymbol: "T", CardRank: 10}: 1,
 				Card{CardSymbol: "K", CardRank: 13}: 1,
 			},
-			Bid: 765,
+			Bid:  765,
+			Type: "One Pair",
 		},
 		{
 			CardString: "T55J5",
@@ -80,7 +81,8 @@ func TestSortHandsIntoRank(t *testing.T) {
 				Card{CardSymbol: "5", CardRank: 5}:  3,
 				Card{CardSymbol: "J", CardRank: 11}: 1,
 			},
-			Bid: 684,
+			Bid:  684,
+			Type: "Three of a Kind",
 		},
 		{
 			CardString: "KK677",
@@ -89,7 +91,8 @@ func TestSortHandsIntoRank(t *testing.T) {
 				Card{CardSymbol: "7", CardRank: 7}:  2,
 				Card{CardSymbol: "6", CardRank: 6}:  1,
 			},
-			Bid: 28,
+			Bid:  28,
+			Type: "Two Pair",
 		},
 		{
 			CardString: "KTJJT",
@@ -98,7 +101,8 @@ func TestSortHandsIntoRank(t *testing.T) {
 				Card{CardSymbol: "T", CardRank: 10}: 2,
 				Card{CardSymbol: "J", CardRank: 11}: 2,
 			},
-			Bid: 220,
+			Bid:  220,
+			Type: "Two Pair",
 		},
 		{
 			CardString: "QQQJA",
@@ -107,7 +111,8 @@ func TestSortHandsIntoRank(t *testing.T) {
 				Card{CardSymbol: "J", CardRank: 11}: 1,
 				Card{CardSymbol: "A", CardRank: 14}: 1,
 			},
-			Bid: 483,
+			Bid:  483,
+			Type: "Three of a Kind",
 		},
 	}
 
@@ -120,7 +125,9 @@ func TestSortHandsIntoRank(t *testing.T) {
 				Card{CardSymbol: "T", CardRank: 10}: 1,
 				Card{CardSymbol: "K", CardRank: 13}: 1,
 			},
-			Bid: 765,
+			Bid:          765,
+			Type:         "One Pair",
+			HandStrength: 20302100313,
 		},
 		{
 			CardString: "KTJJT",
@@ -129,7 +136,9 @@ func TestSortHandsIntoRank(t *testing.T) {
 				Card{CardSymbol: "T", CardRank: 10}: 2,
 				Card{CardSymbol: "J", CardRank: 11}: 2,
 			},
-			Bid: 220,
+			Bid:          220,
+			Type:         "Two Pair",
+			HandStrength: 31310111110,
 		},
 		{
 			CardString: "KK677",
@@ -138,7 +147,9 @@ func TestSortHandsIntoRank(t *testing.T) {
 				Card{CardSymbol: "7", CardRank: 7}:  2,
 				Card{CardSymbol: "6", CardRank: 6}:  1,
 			},
-			Bid: 28,
+			Bid:          28,
+			Type:         "Two Pair",
+			HandStrength: 31313060707,
 		},
 		{
 			CardString: "T55J5",
@@ -147,7 +158,9 @@ func TestSortHandsIntoRank(t *testing.T) {
 				Card{CardSymbol: "5", CardRank: 5}:  3,
 				Card{CardSymbol: "J", CardRank: 11}: 1,
 			},
-			Bid: 684,
+			Bid:          684,
+			Type:         "Three of a Kind",
+			HandStrength: 41005051105,
 		},
 		{
 			CardString: "QQQJA",
@@ -156,12 +169,14 @@ func TestSortHandsIntoRank(t *testing.T) {
 				Card{CardSymbol: "J", CardRank: 11}: 1,
 				Card{CardSymbol: "A", CardRank: 14}: 1,
 			},
-			Bid: 483,
+			Bid:          483,
+			Type:         "Three of a Kind",
+			HandStrength: 41212121114,
 		},
 	}
 	sortHands(got)
 	if !cmp.Equal(want, got) {
-		t.Errorf("want %q, got %q", want, got)
+		t.Errorf("want %v, got %v", want, got)
 	}
 }
 
