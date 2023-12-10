@@ -9,13 +9,9 @@ import (
 	"strings"
 )
 
-type Round struct {
-	Hand Hand
-	Bid  int
-}
-
 type Hand struct {
 	Cards string
+	Bid   int
 }
 
 type Card struct {
@@ -23,7 +19,7 @@ type Card struct {
 	CardRank   int
 }
 
-func loadInput(input string) []Round {
+func loadInput(input string) []Hand {
 	f, err := os.Open(input)
 	if err != nil {
 		log.Fatal(err)
@@ -35,27 +31,25 @@ func loadInput(input string) []Round {
 		}
 	}(f)
 
-	var res []Round
+	var res []Hand
 
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		str := scanner.Text()
 		splitStr := strings.Split(str, " ")
 		num, _ := strconv.Atoi(splitStr[1])
-		res = append(res, Round{
-			Hand: Hand{
-				Cards: splitStr[0],
-			},
-			Bid: num,
+		res = append(res, Hand{
+			Cards: splitStr[0],
+			Bid:   num,
 		})
 	}
 	return res
 }
 
-func getHandStrength(round Round) int {
+func getHandStrength(hand Hand) int {
 	handStrength := 0
 	handMap := map[string]int{}
-	for _, v := range round.Hand.Cards {
+	for _, v := range hand.Cards {
 		handMap[string(v)] = handMap[string(v)] + 1
 	}
 	fmt.Println(handStrength)
