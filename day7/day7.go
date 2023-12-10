@@ -3,6 +3,7 @@ package day7
 import (
 	"bufio"
 	"log"
+	"math"
 	"os"
 	"sort"
 	"strconv"
@@ -10,8 +11,9 @@ import (
 )
 
 type Hand struct {
-	CardMap map[Card]int
-	Bid     int
+	CardString string
+	CardMap    map[Card]int
+	Bid        int
 }
 
 type Card struct {
@@ -66,8 +68,9 @@ func loadInput(input string) []Hand {
 			cardMap[card] = cardMap[card] + 1
 		}
 		res = append(res, Hand{
-			CardMap: cardMap,
-			Bid:     num,
+			CardString: splitStr[0],
+			CardMap:    cardMap,
+			Bid:        num,
 		})
 	}
 	return res
@@ -75,33 +78,57 @@ func loadInput(input string) []Hand {
 
 func sortHands(hands []Hand) {
 	sort.Slice(hands, func(i, j int) bool {
-		return getHandStrength(hands[i].CardMap) > getHandStrength(hands[j].CardMap)
+		return calculateStrength(hands[i]) < calculateStrength(hands[j])
 	})
 }
 
-func getHandStrength(cardMap map[Card]int) int {
+func getHandStrength(hand Hand) int {
 	handStrength := 0
-	cardValueMap := getCardValueMap()
-
-	switch len(cardMap) {
-	case 1:
-		handStrength = 10000
-	case 2:
-		handStrength = 1000
-	case 3:
-		handStrength = 100
-	case 4:
-		handStrength = 10
-	case 5:
-		handStrength = 0
+	maxCardCount := 0
+	for _, v := range hand.CardMap {
+		if v > maxCardCount {
+			maxCardCount = v
+		}
 	}
+	switch maxCardCount {
+	case 5:
+		handStrength = 7000000
+	case 4:
+		handStrength = 6000000
+	case 3:
+		if len(hand.CardMap) == 2 {
+			handStrength = 5000000
+		} else {
+			handStrength = 4000000
+		}
+	case 2:
+		if len(hand.CardMap) == 3 {
+			handStrength = 3000000
+		} else {
+			handStrength = 2000000
+		}
+	case 1:
+		handStrength = 1000000
+	}
+	return handStrength
+}
 
-	for key, value := range cardMap {
-		handStrength += cardValueMap[key.CardSymbol] * value
+func calculateStrength(hand Hand) int {
+	typeStrength := getHandStrength(hand)
+	cardValueMap := getCardValueMap()
+	handStrength := typeStrength
+	for i, card := range strings.Split(hand.CardString, "") {
+		handStrength += cardValueMap[card] * int(math.Pow(10, float64(4-i)))
 	}
 	return handStrength
 }
 
 func Solve(filePath string) int {
-	return 6440
+	input := loadInput(filePath)
+	sortHands(input)
+	part1 := 0
+	for i, v := range input {
+		part1 += v.Bid * (i + 1)
+	}
+	return part1
 }

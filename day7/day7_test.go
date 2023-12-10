@@ -9,6 +9,7 @@ func TestLoadInputToHandStructArray(t *testing.T) {
 	input := "resources/input_test.txt"
 	want := []Hand{
 		{
+			CardString: "32T3K",
 			CardMap: map[Card]int{
 				Card{CardSymbol: "3", CardRank: 3}:  2,
 				Card{CardSymbol: "2", CardRank: 2}:  1,
@@ -18,6 +19,7 @@ func TestLoadInputToHandStructArray(t *testing.T) {
 			Bid: 765,
 		},
 		{
+			CardString: "T55J5",
 			CardMap: map[Card]int{
 				Card{CardSymbol: "T", CardRank: 10}: 1,
 				Card{CardSymbol: "5", CardRank: 5}:  3,
@@ -26,6 +28,7 @@ func TestLoadInputToHandStructArray(t *testing.T) {
 			Bid: 684,
 		},
 		{
+			CardString: "KK677",
 			CardMap: map[Card]int{
 				Card{CardSymbol: "K", CardRank: 13}: 2,
 				Card{CardSymbol: "7", CardRank: 7}:  2,
@@ -34,6 +37,7 @@ func TestLoadInputToHandStructArray(t *testing.T) {
 			Bid: 28,
 		},
 		{
+			CardString: "KTJJT",
 			CardMap: map[Card]int{
 				Card{CardSymbol: "K", CardRank: 13}: 1,
 				Card{CardSymbol: "T", CardRank: 10}: 2,
@@ -42,6 +46,7 @@ func TestLoadInputToHandStructArray(t *testing.T) {
 			Bid: 220,
 		},
 		{
+			CardString: "QQQJA",
 			CardMap: map[Card]int{
 				Card{CardSymbol: "Q", CardRank: 12}: 3,
 				Card{CardSymbol: "J", CardRank: 11}: 1,
@@ -59,6 +64,7 @@ func TestLoadInputToHandStructArray(t *testing.T) {
 func TestSortHandsIntoRank(t *testing.T) {
 	got := []Hand{
 		{
+			CardString: "32T3K",
 			CardMap: map[Card]int{
 				Card{CardSymbol: "3", CardRank: 3}:  2,
 				Card{CardSymbol: "2", CardRank: 2}:  1,
@@ -68,17 +74,74 @@ func TestSortHandsIntoRank(t *testing.T) {
 			Bid: 765,
 		},
 		{
+			CardString: "T55J5",
 			CardMap: map[Card]int{
 				Card{CardSymbol: "T", CardRank: 10}: 1,
 				Card{CardSymbol: "5", CardRank: 5}:  3,
 				Card{CardSymbol: "J", CardRank: 11}: 1,
 			},
 			Bid: 684,
+		},
+		{
+			CardString: "KK677",
+			CardMap: map[Card]int{
+				Card{CardSymbol: "K", CardRank: 13}: 2,
+				Card{CardSymbol: "7", CardRank: 7}:  2,
+				Card{CardSymbol: "6", CardRank: 6}:  1,
+			},
+			Bid: 28,
+		},
+		{
+			CardString: "KTJJT",
+			CardMap: map[Card]int{
+				Card{CardSymbol: "K", CardRank: 13}: 1,
+				Card{CardSymbol: "T", CardRank: 10}: 2,
+				Card{CardSymbol: "J", CardRank: 11}: 2,
+			},
+			Bid: 220,
+		},
+		{
+			CardString: "QQQJA",
+			CardMap: map[Card]int{
+				Card{CardSymbol: "Q", CardRank: 12}: 3,
+				Card{CardSymbol: "J", CardRank: 11}: 1,
+				Card{CardSymbol: "A", CardRank: 14}: 1,
+			},
+			Bid: 483,
 		},
 	}
 
 	want := []Hand{
 		{
+			CardString: "32T3K",
+			CardMap: map[Card]int{
+				Card{CardSymbol: "3", CardRank: 3}:  2,
+				Card{CardSymbol: "2", CardRank: 2}:  1,
+				Card{CardSymbol: "T", CardRank: 10}: 1,
+				Card{CardSymbol: "K", CardRank: 13}: 1,
+			},
+			Bid: 765,
+		},
+		{
+			CardString: "KTJJT",
+			CardMap: map[Card]int{
+				Card{CardSymbol: "K", CardRank: 13}: 1,
+				Card{CardSymbol: "T", CardRank: 10}: 2,
+				Card{CardSymbol: "J", CardRank: 11}: 2,
+			},
+			Bid: 220,
+		},
+		{
+			CardString: "KK677",
+			CardMap: map[Card]int{
+				Card{CardSymbol: "K", CardRank: 13}: 2,
+				Card{CardSymbol: "7", CardRank: 7}:  2,
+				Card{CardSymbol: "6", CardRank: 6}:  1,
+			},
+			Bid: 28,
+		},
+		{
+			CardString: "T55J5",
 			CardMap: map[Card]int{
 				Card{CardSymbol: "T", CardRank: 10}: 1,
 				Card{CardSymbol: "5", CardRank: 5}:  3,
@@ -87,13 +150,13 @@ func TestSortHandsIntoRank(t *testing.T) {
 			Bid: 684,
 		},
 		{
+			CardString: "QQQJA",
 			CardMap: map[Card]int{
-				Card{CardSymbol: "3", CardRank: 3}:  2,
-				Card{CardSymbol: "2", CardRank: 2}:  1,
-				Card{CardSymbol: "T", CardRank: 10}: 1,
-				Card{CardSymbol: "K", CardRank: 13}: 1,
+				Card{CardSymbol: "Q", CardRank: 12}: 3,
+				Card{CardSymbol: "J", CardRank: 11}: 1,
+				Card{CardSymbol: "A", CardRank: 14}: 1,
 			},
-			Bid: 765,
+			Bid: 483,
 		},
 	}
 	sortHands(got)
