@@ -51,9 +51,18 @@ func checkWinScenarios(race Race) int {
 	winScenarios := 0
 	for i := 1; i < race.Time; i++ {
 		distance := i * (race.Time - i)
-		if distance >= race.Distance {
+		if distance > race.Distance {
 			winScenarios++
 		}
 	}
 	return winScenarios
+}
+
+func Solve(filePath string) int {
+	input := loadInput(filePath)
+	part1 := 1
+	for _, race := range input {
+		part1 = part1 * checkWinScenarios(race)
+	}
+	return part1
 }
