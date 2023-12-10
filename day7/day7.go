@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -70,4 +71,33 @@ func loadInput(input string) []Hand {
 		})
 	}
 	return res
+}
+
+func sortHands(hands []Hand) {
+	sort.Slice(hands, func(i, j int) bool {
+		return getHandStrength(hands[i].CardMap) > getHandStrength(hands[j].CardMap)
+	})
+}
+
+func getHandStrength(cardMap map[Card]int) int {
+	handStrength := 0
+	cardValueMap := getCardValueMap()
+
+	switch len(cardMap) {
+	case 1:
+		handStrength = 10000
+	case 2:
+		handStrength = 1000
+	case 3:
+		handStrength = 100
+	case 4:
+		handStrength = 10
+	case 5:
+		handStrength = 0
+	}
+
+	for key, value := range cardMap {
+		handStrength += cardValueMap[key.CardSymbol] * value
+	}
+	return handStrength
 }

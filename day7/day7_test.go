@@ -57,10 +57,47 @@ func TestLoadInputToHandStructArray(t *testing.T) {
 }
 
 func TestSortHandsIntoRank(t *testing.T) {
-	input := loadInput("resources/input_test.txt")
-	want := 440
-	got := sortHands(input)
+	got := []Hand{
+		{
+			CardMap: map[Card]int{
+				Card{CardSymbol: "3", CardRank: 3}:  2,
+				Card{CardSymbol: "2", CardRank: 2}:  1,
+				Card{CardSymbol: "T", CardRank: 10}: 1,
+				Card{CardSymbol: "K", CardRank: 13}: 1,
+			},
+			Bid: 765,
+		},
+		{
+			CardMap: map[Card]int{
+				Card{CardSymbol: "T", CardRank: 10}: 1,
+				Card{CardSymbol: "5", CardRank: 5}:  3,
+				Card{CardSymbol: "J", CardRank: 11}: 1,
+			},
+			Bid: 684,
+		},
+	}
+
+	want := []Hand{
+		{
+			CardMap: map[Card]int{
+				Card{CardSymbol: "T", CardRank: 10}: 1,
+				Card{CardSymbol: "5", CardRank: 5}:  3,
+				Card{CardSymbol: "J", CardRank: 11}: 1,
+			},
+			Bid: 684,
+		},
+		{
+			CardMap: map[Card]int{
+				Card{CardSymbol: "3", CardRank: 3}:  2,
+				Card{CardSymbol: "2", CardRank: 2}:  1,
+				Card{CardSymbol: "T", CardRank: 10}: 1,
+				Card{CardSymbol: "K", CardRank: 13}: 1,
+			},
+			Bid: 765,
+		},
+	}
+	sortHands(got)
 	if !cmp.Equal(want, got) {
-		t.Errorf("want %d, got %d", want, got)
+		t.Errorf("want %q, got %q", want, got)
 	}
 }
