@@ -2,7 +2,6 @@ package day7
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -71,13 +70,4 @@ func loadInput(input string) []Hand {
 		})
 	}
 	return res
-}
-
-func getHandStrength(hand Hand) int {
-	handStrength := 0
-	handMap := map[string]int{}
-	fmt.Println(handMap)
-	fmt.Println(hand.CardMap)
-	fmt.Println(handStrength)
-	return 440
 }

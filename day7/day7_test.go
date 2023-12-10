@@ -56,18 +56,11 @@ func TestLoadInputToHandStructArray(t *testing.T) {
 	}
 }
 
-func TestGetHandStrength(t *testing.T) {
-	input := Hand{
-		CardMap: map[Card]int{
-			Card{CardSymbol: "K", CardRank: 13}: 1,
-			Card{CardSymbol: "T", CardRank: 10}: 2,
-			Card{CardSymbol: "J", CardRank: 11}: 2,
-		},
-		Bid: 220,
-	}
+func TestSortHandsIntoRank(t *testing.T) {
+	input := loadInput("resources/input_test.txt")
 	want := 440
-	got := getHandStrength(input)
-	if want != got {
+	got := sortHands(input)
+	if !cmp.Equal(want, got) {
 		t.Errorf("want %d, got %d", want, got)
 	}
 }
