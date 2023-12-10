@@ -34,3 +34,15 @@ func TestLoadInputToRoundStruct(t *testing.T) {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
+
+func TestGetHandStrength(t *testing.T) {
+	input := Round{
+		Hand: "KTJJT",
+		Bid:  220,
+	}
+	want := 440
+	got := getHandStrength(input)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
