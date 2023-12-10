@@ -10,23 +10,23 @@ func TestLoadInputToRoundStruct(t *testing.T) {
 	want := []Round{
 		{
 			Hand: "32T3K",
-			Bid: 765,
+			Bid:  765,
 		},
 		{
 			Hand: "T55J5",
-			Bid: 684,
+			Bid:  684,
 		},
 		{
 			Hand: "KK677",
-			Bid: 28
+			Bid:  28,
 		},
 		{
 			Hand: "KTJJT",
-			Bid: 220
+			Bid:  220,
 		},
 		{
 			Hand: "QQQJA",
-			Bid: 483
+			Bid:  483,
 		},
 	}
 	got := loadInput(input)
