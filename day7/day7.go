@@ -1,31 +1,41 @@
 package day7
 
+import (
+	"bufio"
+	"log"
+	"os"
+	"strconv"
+	"strings"
+)
+
 type Round struct {
 	Hand string
 	Bid  int
 }
 
 func loadInput(input string) []Round {
-	return []Round{
-		{
-			Hand: "32T3K",
-			Bid:  765,
-		},
-		{
-			Hand: "T55J5",
-			Bid:  684,
-		},
-		{
-			Hand: "KK677",
-			Bid:  28,
-		},
-		{
-			Hand: "KTJJT",
-			Bid:  220,
-		},
-		{
-			Hand: "QQQJA",
-			Bid:  483,
-		},
+	f, err := os.Open(input)
+	if err != nil {
+		log.Fatal(err)
 	}
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+
+		}
+	}(f)
+
+	var res []Round
+
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		str := scanner.Text()
+		splitStr := strings.Split(str, " ")
+		num, _ := strconv.Atoi(splitStr[1])
+		res = append(res, Round{
+			Hand: splitStr[0],
+			Bid:  num,
+		})
+	}
+	return res
 }
