@@ -5,47 +5,47 @@ import (
 	"testing"
 )
 
-func TestLoadInputToRoundStruct(t *testing.T) {
+func TestLoadInputToHandStructArray(t *testing.T) {
 	input := "resources/input_test.txt"
 	want := []Hand{
 		{
-			CardMap: map[string]int{
-				"3": 2,
-				"2": 1,
-				"T": 1,
-				"K": 1,
+			CardMap: map[Card]int{
+				Card{CardSymbol: "3", CardRank: 3}:  2,
+				Card{CardSymbol: "2", CardRank: 2}:  1,
+				Card{CardSymbol: "T", CardRank: 10}: 1,
+				Card{CardSymbol: "K", CardRank: 13}: 1,
 			},
 			Bid: 765,
 		},
 		{
-			CardMap: map[string]int{
-				"T": 1,
-				"5": 3,
-				"J": 1,
+			CardMap: map[Card]int{
+				Card{CardSymbol: "T", CardRank: 10}: 1,
+				Card{CardSymbol: "5", CardRank: 5}:  3,
+				Card{CardSymbol: "J", CardRank: 11}: 1,
 			},
 			Bid: 684,
 		},
 		{
-			CardMap: map[string]int{
-				"K": 2,
-				"7": 2,
-				"6": 1,
+			CardMap: map[Card]int{
+				Card{CardSymbol: "K", CardRank: 13}: 2,
+				Card{CardSymbol: "7", CardRank: 7}:  2,
+				Card{CardSymbol: "6", CardRank: 6}:  1,
 			},
 			Bid: 28,
 		},
 		{
-			CardMap: map[string]int{
-				"K": 1,
-				"T": 2,
-				"J": 2,
+			CardMap: map[Card]int{
+				Card{CardSymbol: "K", CardRank: 13}: 1,
+				Card{CardSymbol: "T", CardRank: 10}: 2,
+				Card{CardSymbol: "J", CardRank: 11}: 2,
 			},
 			Bid: 220,
 		},
 		{
-			CardMap: map[string]int{
-				"Q": 3,
-				"J": 1,
-				"A": 1,
+			CardMap: map[Card]int{
+				Card{CardSymbol: "Q", CardRank: 12}: 3,
+				Card{CardSymbol: "J", CardRank: 11}: 1,
+				Card{CardSymbol: "A", CardRank: 14}: 1,
 			},
 			Bid: 483,
 		},
@@ -58,10 +58,10 @@ func TestLoadInputToRoundStruct(t *testing.T) {
 
 func TestGetHandStrength(t *testing.T) {
 	input := Hand{
-		CardMap: map[string]int{
-			"K": 1,
-			"T": 2,
-			"J": 2,
+		CardMap: map[Card]int{
+			Card{CardSymbol: "K", CardRank: 13}: 1,
+			Card{CardSymbol: "T", CardRank: 10}: 2,
+			Card{CardSymbol: "J", CardRank: 11}: 2,
 		},
 		Bid: 220,
 	}
