@@ -70,7 +70,6 @@ func loadInput(input string) []Hand {
 			Bid:     num,
 		})
 	}
-	fmt.Println("map", res)
 	return res
 }
 
