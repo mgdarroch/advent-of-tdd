@@ -55,7 +55,7 @@ func TestLoadInputToHandStructArray(t *testing.T) {
 			Bid: 483,
 		},
 	}
-	got := loadInput(input)
+	got := loadInput(input, false)
 	if !cmp.Equal(want, got) {
 		t.Errorf("want %v, got %v", want, got)
 	}
@@ -189,9 +189,27 @@ func TestSolvePart1(t *testing.T) {
 	}
 }
 
+func TestSolvePartReal(t *testing.T) {
+	input := "resources/input.txt"
+	want := 248217452
+	got, _ := Solve(input)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
 func TestSolvePart2(t *testing.T) {
 	input := "resources/input_test.txt"
 	want := 5905
+	_, got := Solve(input)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
+func TestSolvePart2Real(t *testing.T) {
+	input := "resources/input.txt"
+	want := 245576185
 	_, got := Solve(input)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)

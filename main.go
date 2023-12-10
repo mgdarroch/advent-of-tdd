@@ -95,6 +95,6 @@ func solutionDay6() {
 
 func solutionDay7() {
 	filePath := "day7/resources/input.txt"
-	part1 := day7.Solve(filePath)
-	fmt.Printf("Day 7 => Part 1: %d, Part 2: %d\n", part1)
+	part1, part2 := day7.Solve(filePath)
+	fmt.Printf("Day 7 => Part 1: %d, Part 2: %d\n", part1, part2)
 }

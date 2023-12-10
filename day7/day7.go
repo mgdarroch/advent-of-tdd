@@ -22,7 +22,24 @@ type Card struct {
 	CardRank   int
 }
 
-func getCardValueMap() map[string]int {
+func getCardValueMap(joker bool) map[string]int {
+	if joker {
+		return map[string]int{
+			"2": 2,
+			"3": 3,
+			"4": 4,
+			"5": 5,
+			"6": 6,
+			"7": 7,
+			"8": 8,
+			"9": 9,
+			"T": 10,
+			"J": 1,
+			"Q": 12,
+			"K": 13,
+			"A": 14,
+		}
+	}
 	return map[string]int{
 		"2": 2,
 		"3": 3,
@@ -40,7 +57,7 @@ func getCardValueMap() map[string]int {
 	}
 }
 
-func loadInput(input string) []Hand {
+func loadInput(input string, joker bool) []Hand {
 	f, err := os.Open(input)
 	if err != nil {
 		log.Fatal(err)
@@ -54,7 +71,7 @@ func loadInput(input string) []Hand {
 
 	var res []Hand
 	scanner := bufio.NewScanner(f)
-	cardValueMap := getCardValueMap()
+	cardValueMap := getCardValueMap(joker)
 
 	for scanner.Scan() {
 		cardMap := map[Card]int{}
@@ -80,21 +97,44 @@ func loadInput(input string) []Hand {
 
 func sortHands(hands []Hand) {
 	sort.Slice(hands, func(i, j int) bool {
-		if calculateStrength(&hands[i]) < calculateStrength(&hands[j]) {
+		if calculateStrength(&hands[i], false) < calculateStrength(&hands[j], false) {
 			return true
 		}
 		return false
 	})
 }
 
-func getHandStrength(hand *Hand) int {
+func getHandStrength(hand *Hand, joker bool) int {
 	var handStrength int
 	maxCardCount := 0
-	for _, v := range hand.CardMap {
+	cardMap := hand.CardMap
+	highestCardNum := 0
+	var highestCard Card
+	var jokerCard Card
+	if joker {
+		// modify the map to put all the Js into the card with the highest count
+		for card, val := range cardMap {
+			if val > highestCardNum && card.CardSymbol != "J" {
+				highestCardNum = val
+				highestCard = card
+			}
+			if card.CardSymbol == "J" {
+				jokerCard = card
+			}
+		}
+
+		if jokerCard.CardSymbol != "" {
+			cardMap[highestCard] += cardMap[jokerCard]
+			delete(cardMap, jokerCard)
+		}
+	}
+
+	for _, v := range cardMap {
 		if v > maxCardCount {
 			maxCardCount = v
 		}
 	}
+
 	switch maxCardCount {
 	case 5:
 		hand.Type = "Five of a Kind"
@@ -125,10 +165,10 @@ func getHandStrength(hand *Hand) int {
 	return handStrength
 }
 
-func calculateStrength(hand *Hand) int {
-	typeStrength := getHandStrength(hand)
+func calculateStrength(hand *Hand, joker bool) int {
+	typeStrength := getHandStrength(hand, joker)
 	typeStr := strconv.Itoa(typeStrength)
-	cardValueMap := getCardValueMap()
+	cardValueMap := getCardValueMap(joker)
 	cards := strings.Split(hand.CardString, "")
 	for i := 0; i < len(hand.CardString); i++ {
 		if cardValueMap[cards[i]] < 10 {
@@ -143,13 +183,27 @@ func calculateStrength(hand *Hand) int {
 	return res
 }
 
+func sortHandsWithJoker(hands []Hand) {
+	sort.Slice(hands, func(i, j int) bool {
+		if calculateStrength(&hands[i], true) < calculateStrength(&hands[j], true) {
+			return true
+		}
+		return false
+	})
+}
+
 func Solve(filePath string) (int, int) {
-	input := loadInput(filePath)
-	sortHands(input)
+	inputPart1 := loadInput(filePath, false)
+	sortHands(inputPart1)
 	part1 := 0
-	part2 := 5905
-	for i, v := range input {
+	for i, v := range inputPart1 {
 		part1 += v.Bid * (i + 1)
+	}
+	inputPart2 := loadInput(filePath, true)
+	sortHandsWithJoker(inputPart2)
+	part2 := 0
+	for i, v := range inputPart2 {
+		part2 += v.Bid * (i + 1)
 	}
 	return part1, part2
 }
