@@ -101,3 +101,12 @@ func TestSortHandsIntoRank(t *testing.T) {
 		t.Errorf("want %q, got %q", want, got)
 	}
 }
+
+func TestSolvePart1(t *testing.T) {
+	input := "resources/input_test.txt"
+	want := 6440
+	got := Solve(input)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
