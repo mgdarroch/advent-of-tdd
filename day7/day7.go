@@ -143,12 +143,13 @@ func calculateStrength(hand *Hand) int {
 	return res
 }
 
-func Solve(filePath string) int {
+func Solve(filePath string) (int, int) {
 	input := loadInput(filePath)
 	sortHands(input)
 	part1 := 0
+	part2 := 5905
 	for i, v := range input {
 		part1 += v.Bid * (i + 1)
 	}
-	return part1
+	return part1, part2
 }

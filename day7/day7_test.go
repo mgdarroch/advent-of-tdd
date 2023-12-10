@@ -183,7 +183,16 @@ func TestSortHandsIntoRank(t *testing.T) {
 func TestSolvePart1(t *testing.T) {
 	input := "resources/input_test.txt"
 	want := 6440
-	got := Solve(input)
+	got, _ := Solve(input)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
+
+func TestSolvePart2(t *testing.T) {
+	input := "resources/input_test.txt"
+	want := 5905
+	_, got := Solve(input)
 	if want != got {
 		t.Errorf("want %d, got %d", want, got)
 	}
